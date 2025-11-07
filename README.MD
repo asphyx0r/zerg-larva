@@ -7,6 +7,7 @@ me@asphyx.fr
 ## Changelog
 
 * 13/10/2025 : v1.0.0 - Initial version
+* 08/11/2025 : v1.0.1 - Added Git default files
 
 ## Description
 
@@ -36,7 +37,7 @@ asphyx@KERRIGAN:~/code$ cd ProjectName
 2. Duplicate and rename original file `zerg-larva.sh` to your target script:
 
 ```console
-asphyx@KERRIGAN:~/code$ cp ./zerg-larva.sh vxBackup.sh
+asphyx@KERRIGAN:~/code$ mv ./zerg-larva.sh vxBackup.sh
 ```
 
 3. Edit your new file with your favorite editor:
