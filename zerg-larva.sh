@@ -1,4 +1,21 @@
 #!/usr/bin/env bash
+#
+# Name        : myscript.sh
+# Description : Short description of the script purpose.
+# Usage       : myscript.sh [options]
+# Author      : Your Name
+# Version     : 1.0
+#
+# Prerequisites:
+#   - Linux system running Debian 11 or later
+#   - Bash shell (this script requires bash-specific features)
+#   - Required commands: grep, sed, awk, curl/wget (adjust as needed)
+#   - Sufficient permissions for file or directory operations
+#   - Network connectivity if remote calls are performed
+#
+# Notes:
+#   - This script is not POSIX-compliant; do not run it under /bin/sh.
+#
 
 # Global variables
 readonly APPNAME="ApplicationName"
