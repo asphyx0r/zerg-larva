@@ -17,6 +17,12 @@
 #   - This script is not POSIX-compliant; do not run it under /bin/sh.
 #
 
+# Safety settings
+set -o errexit
+set -o nounset
+set -o pipefail
+IFS=$' \t\n'
+
 # Global variables
 readonly APPNAME="ApplicationName"
 readonly VERSION="v1.0.0"
