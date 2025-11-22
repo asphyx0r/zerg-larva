@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Name        : myscript.sh
+# Name        : <script_name>.sh
 # Description : Short description of the script purpose.
-# Usage       : myscript.sh [options]
-# Author      : Your Name
-# Version     : 1.0
+# Usage       : script_name.sh [options]
+# Author      : Your Name - Your Email
+# Version     : v1.0.0
 #
 # Prerequisites:
 #   - Linux system running Debian 11 or later
@@ -30,9 +30,9 @@ readonly VERSION="v1.0.0"
 # System variables, I will use it later
 RC=0
 functionName="undef()"
-scriptName=${0##*/}
-scriptPath=${0%/*}
-scriptFullPath=${0}
+readonly scriptName="${0##*/}"
+readonly scriptPath="${0%/*}"
+readonly scriptFullPath="${0}"
 scriptArgs=${@}
 
 # Arguments assignment, CLI/POSIX flavour
@@ -43,16 +43,16 @@ argListExitCodes=false
 argDirectory=""
 
 # I need at least one argument
-if [ $# -eq 0 ]
-  then
-    echo "Missing operand"
-    echo "Try '$scriptName --help' for more information."
-    RC=1
-    exit $RC
+if [ "$#" -eq 0 ]
+    then
+        echo "Missing operand"
+        echo "Try '$scriptName --help' for more information."
+        RC=1
+        exit "$RC"
 fi
 
 # For each argument, search a pattern then shift to next argument
-while [[ $# -gt 0 ]]; do
+while [[ "$#" -gt 0 ]]; do
     case "$1" in
         -h|--help)
             argHelp=true
@@ -77,17 +77,17 @@ while [[ $# -gt 0 ]]; do
                 echo "Missing DIRECTORY" >&2;
                 echo "Try '$scriptName --help' for more information.";
                 RC=4
-                exit $RC
+                exit "$RC"
             fi
 
             # DIRECTORY is followed by a directory string so shift 2
             shift 2
             ;;
-        *)
-          echo "Unknown operand: $1" >&2;
-          echo "Try '$scriptName --help' for more information.";
-          RC=2;
-          exit $RC ;;
+                *)
+                    echo "Unknown operand: $1" >&2;
+                    echo "Try '$scriptName --help' for more information.";
+                    RC=2;
+                    exit "$RC" ;;
     esac
    
 done
@@ -96,7 +96,7 @@ done
 if [[ -n "$argDirectory" && ! -d "$argDirectory" && ! -r "$argDirectory" && ! -x "$argDirectory" ]]; then
     echo "Error: $argDirectory is not a valid or readable directory." >&2
     RC=5
-    exit $RC
+    exit "$RC"
 fi
 
 # Easy logging, use: log "LEVEL" "Log message"
@@ -106,10 +106,10 @@ function log() {
     # local functionName="log()"
 
     # Arguments assignation
-    if [ $# -ne 2 ]; then
+    if [ "$#" -ne 2 ]; then
         echo -e "\tlog(): Error: 2 arguments required. Usage: log \"LEVEL\" \"Log message\""
         RC=3
-        exit $RC
+        exit "$RC"
     else
     
         local level="$1"
@@ -179,8 +179,8 @@ function main() {
   log "DEBUG" "Information for debugging purpose only"
   log "WRONG" "This value is not allowed, I don't trust you"
 
-  log "INFO" "$APPNAME $VERSION: End ($RC)"
-  exit $RC
+    log "INFO" "$APPNAME $VERSION: End ($RC)"
+    exit "$RC"
 }
 
 # Here is the core: Display help, version or run main()

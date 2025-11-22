@@ -8,6 +8,7 @@ me@asphyx.fr
 
 * 13/10/2025 : v1.0.0 - Initial version
 * 08/11/2025 : v1.0.1 - Added Git default files
+* 22/11/2025 : v1.0.2 - Improved security fixes
 
 ## Description
 
@@ -46,19 +47,19 @@ asphyx@KERRIGAN:~/code$ mv ./zerg-larva.sh vxBackup.sh
 asphyx@KERRIGAN:~/code$ nano vxBackup.sh 
 ```
 
-4. **Line 4**, edit the value of the variable `APPNAME` to set your application human-readable name:
+4. **Line 27**, edit the value of the variable `APPNAME` to set your application human-readable name:
 
 ```bash
 readonly APPNAME="ApplicationName"
 ```
 
-5. **Line 5**, edit the value of the variable `VERSION` to set your application version number:
+5. **Line 28**, edit the value of the variable `VERSION` to set your application version number:
 
 ```bash
 readonly VERSION="v1.0.0"
 ```
 
-6. **Line 16** and later, assign a variable and a default value for each of your command line argument:
+6. **Line 39** and later, assign a variable and a default value for each of your command line argument:
 
 ```bash
 argHelp=false
@@ -68,7 +69,7 @@ argListExitCodes=false
 argDirectory=""
 ```
 
-7. **Line 34** to **Line 50**, set the list of strings to be matched as arguments in the command line and assign it to the variables listed at step **6**:
+7. **Line 57** to **Line 73**, set the list of strings to be matched as arguments in the command line and assign it to the variables listed at step **6**:
 
 ```bash
         -h|--help)
@@ -105,6 +106,8 @@ The string has to be defined but not be an argument by itself:
             shift 2
             ;;
 ```
+
+8. **Line 3** to **Line 17** and beyond, document the script using the header template.
 
 ## Default usage examples
 
