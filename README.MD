@@ -6,9 +6,16 @@ me@asphyx.fr
 
 ## Changelog
 
-* 13/10/2025 : v1.0.0 - Initial version
-* 08/11/2025 : v1.0.1 - Added Git default files
-* 22/11/2025 : v1.0.2 - Improved security fixes
+### v1.0.0 - Initial version (13/10/2025)
+3bf9436 2025-11-08 Repo init: first commit
+
+### v1.0.1 - Added Git default files (08/11/2025)
+7c75b01 2025-11-08 Added Git default files
+
+### v1.0.2 - Improved security fixes (24/11/2025)
+c5ffbf3 2025-11-22 Update README and script metadata for clarity and consistency, improved security fixes
+c8135a4 2025-11-21 Add safety settings to improve script robustness
+5fadc91 2025-11-21 Enhance script header with detailed metadata and prerequisites
 
 ## Description
 
@@ -23,6 +30,12 @@ It supports:
 * Easy logging
 * Verbose mode
 * Default function template
+
+## Sources
+
+* GitHub Home: [https://github.com/asphyx0r/zerg-larva](https://github.com/asphyx0r/zerg-larva)
+* GitHub Repository: [https://github.com/asphyx0r/zerg-larva.git](https://github.com/asphyx0r/zerg-larva.git)
+* Latests Release: [https://github.com/asphyx0r/zerg-larva/releases/latest/](https://github.com/asphyx0r/zerg-larva/releases/latest/)
 
 # How to use this script
 
