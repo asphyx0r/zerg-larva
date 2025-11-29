@@ -1,7 +1,37 @@
+# System / editor noise
+*.swo
+*.swp
+*~
 .DS_Store
 .DS_Store?
-._*
 .Spotlight-V100
 .Trashes
-ehthumbs.db
+._*
+.cache/
 Thumbs.db
+ehthumbs.db
+
+# Logs
+*.log
+*.err
+*.out
+logs/
+log/
+logs/**
+log/**
+
+# Temp and build artifacts
+*.tmp
+*.temp
+*.bak
+*.old
+*.lock
+*.pid
+*.seed
+
+# Archives and exported bundles
+*.zip
+*.tar
+*.gz
+*.tgz
+*.7z
