@@ -27,8 +27,23 @@ IFS=$' \t\n'
 readonly APPNAME="ApplicationName"
 readonly VERSION="v1.0.0"
 
+# Return codes
+# Exit code constants (local to this script)
+# RC_OK:                0 — Success / default (no error)
+# RC_MISSING_OPERAND:   1 — Missing operand (no arguments provided)
+# RC_UNKNOWN_OPERAND:   2 — Unknown operand (invalid option passed)
+# RC_INTERNAL_LOG_ARGS: 3 — Internal error: `log()` called with wrong number of arguments
+# RC_MISSING_DIRECTORY: 4 — Missing DIRECTORY for `-d|--directory` option (directory argument not provided or invalid)
+# RC_INVALID_DIRECTORY: 5 — Provided DIRECTORY does not exist or is not accessible
+readonly RC_OK=0
+readonly RC_MISSING_OPERAND=1
+readonly RC_UNKNOWN_OPERAND=2
+readonly RC_INTERNAL_LOG_ARGS=3
+readonly RC_MISSING_DIRECTORY=4
+readonly RC_INVALID_DIRECTORY=5
+
 # System variables, I will use it later
-RC=0
+RC=$RC_OK
 functionName="undef()"
 readonly scriptName="${0##*/}"
 readonly scriptPath="${0%/*}"
@@ -47,8 +62,8 @@ if [ "$#" -eq 0 ]
     then
         echo "Missing operand"
         echo "Try '$scriptName --help' for more information."
-        RC=1
-        exit "$RC"
+            RC=$RC_MISSING_OPERAND
+            exit "$RC"
 fi
 
 # For each argument, search a pattern then shift to next argument
@@ -71,12 +86,15 @@ while [[ "$#" -gt 0 ]]; do
             shift
             ;;
         -d|--directory)
-            argDirectory="$2";
+            # Check if the next argument is set (not empty, compliant with set -u)
+            if [ -n "${2+x}" ]; then
+                argDirectory="$2";
+            fi
             # DIRECTORY must be set when using -d operand, and followed by a string which is not an operand
             if [[ -z "$argDirectory" || $argDirectory == "--"* || $argDirectory == "-"* ]] ; then
                 echo "Missing DIRECTORY" >&2;
                 echo "Try '$scriptName --help' for more information.";
-                RC=4
+                RC=$RC_MISSING_DIRECTORY
                 exit "$RC"
             fi
 
@@ -86,7 +104,7 @@ while [[ "$#" -gt 0 ]]; do
                 *)
                     echo "Unknown operand: $1" >&2;
                     echo "Try '$scriptName --help' for more information.";
-                    RC=2;
+                    RC=$RC_UNKNOWN_OPERAND;
                     exit "$RC" ;;
     esac
    
@@ -95,7 +113,7 @@ done
 # The target directory must exist and be accessible
 if [[ -n "$argDirectory" && ! -d "$argDirectory" && ! -r "$argDirectory" && ! -x "$argDirectory" ]]; then
     echo "Error: $argDirectory is not a valid or readable directory." >&2
-    RC=5
+    RC=$RC_INVALID_DIRECTORY
     exit "$RC"
 fi
 
@@ -108,7 +126,7 @@ function log() {
     # Arguments assignation
     if [ "$#" -ne 2 ]; then
         echo -e "\tlog(): Error: 2 arguments required. Usage: log \"LEVEL\" \"Log message\""
-        RC=3
+        RC=$RC_INTERNAL_LOG_ARGS
         exit "$RC"
     else
     
