@@ -29,18 +29,20 @@ readonly VERSION="v1.0.0"
 
 # Return codes
 # Exit code constants (local to this script)
-# RC_OK:                0 — Success / default (no error)
-# RC_MISSING_OPERAND:   1 — Missing operand (no arguments provided)
-# RC_UNKNOWN_OPERAND:   2 — Unknown operand (invalid option passed)
-# RC_INTERNAL_LOG_ARGS: 3 — Internal error: `log()` called with wrong number of arguments
-# RC_MISSING_DIRECTORY: 4 — Missing DIRECTORY for `-d|--directory` option (directory argument not provided or invalid)
-# RC_INVALID_DIRECTORY: 5 — Provided DIRECTORY does not exist or is not accessible
+# RC_OK:                  0 — Success / default (no error)
+# RC_MISSING_OPERAND:     1 — Missing operand (no arguments provided)
+# RC_UNKNOWN_OPERAND:     2 — Unknown operand (invalid option passed)
+# RC_INTERNAL_LOG_ARGS:   3 — Internal error: `log()` called with wrong number of arguments
+# RC_MISSING_DIRECTORY:   4 — Missing DIRECTORY for `-d|--directory` option (directory argument not provided or invalid)
+# RC_INVALID_DIRECTORY:   5 — Provided DIRECTORY does not exist or is not accessible
+# RC_UNKNOWN:           125 — Unknown error
 readonly RC_OK=0
 readonly RC_MISSING_OPERAND=1
 readonly RC_UNKNOWN_OPERAND=2
 readonly RC_INTERNAL_LOG_ARGS=3
 readonly RC_MISSING_DIRECTORY=4
 readonly RC_INVALID_DIRECTORY=5
+readonly RC_UNKNOWN=125
 
 # System variables, I will use it later
 RC=$RC_OK

@@ -19,8 +19,7 @@ me@asphyx.fr
 
 ## Description
 
-`zerg-larva` is a base shell script from which all other scripts and, ultimately, more complex components, can be created. Clone `zerg-larva` and mutate it into anything else.
-
+`zerg-larva` is a base shell script from which all other scripts and, ultimately, more complex components, can be created. Clone `zerg-larva` and mutate it into anything else.\
 Build any shell script, by duplicating/cloning the original source file.
 
 It supports:
@@ -72,7 +71,30 @@ readonly APPNAME="ApplicationName"
 readonly VERSION="v1.0.0"
 ```
 
-6. **Line 39** and later, assign a variable and a default value for each of your command line argument:
+6. **Line 39** to **Line 45**, list all the exit codes used by the script. The free range is **0–125**:
+
+**0**:       Success\
+**1-125**:   Application errors (available for your script)\
+**126**:     The command exists but cannot be executed\
+**127**:     The command does not exist\
+**128+N**:   The command terminated due to signal N\
+Example: 130 = 128+2\
+SIGINT = 2
+
+**126–127**: Reserved by POSIX for standard system error cases.\
+**128–255**: Reserved for signal terminations.
+
+```bash
+readonly RC_OK=0
+readonly RC_MISSING_OPERAND=1
+readonly RC_UNKNOWN_OPERAND=2
+readonly RC_INTERNAL_LOG_ARGS=3
+readonly RC_MISSING_DIRECTORY=4
+readonly RC_INVALID_DIRECTORY=5
+readonly RC_UNKNOWN=125
+```
+
+7. **Line 56** and later, assign a variable and a default value for each of your command line argument:
 
 ```bash
 argHelp=false
@@ -82,7 +104,7 @@ argListExitCodes=false
 argDirectory=""
 ```
 
-7. **Line 57** to **Line 73**, set the list of strings to be matched as arguments in the command line and assign it to the variables listed at step **6**:
+8. **Line 72** to **Line 86**, set the list of strings to be matched as arguments in the command line and assign it to the variables listed at step **7**:
 
 ```bash
         -h|--help)
@@ -120,7 +142,7 @@ The string has to be defined but not be an argument by itself:
             ;;
 ```
 
-8. **Line 3** to **Line 17** and beyond, document the script using the header template.
+9. **Line 3** to **Line 17** and beyond, document the script using the header template.
 
 ## Default usage examples
 
