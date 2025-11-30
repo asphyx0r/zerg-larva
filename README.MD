@@ -17,6 +17,13 @@ me@asphyx.fr
 * c8135a4 2025-11-21 Add safety settings to improve script robustness
 * 5fadc91 2025-11-21 Enhance script header with detailed metadata and prerequisites
 
+### v1.0.3 - Improved return code management (30/11/2025)
+* 66cc2b2 2025-11-30 Return codes documentation
+* 8d1bad3 2025-11-29 Improved return code management in zerg-larva.sh
+* 3992a05 2025-11-29 Fixed wrong line break in README.MD
+* f655366 2025-11-29 Updated .gitignore to exclude more files
+* d707968 2025-11-27 Git customization
+
 ## Description
 
 `zerg-larva` is a base shell script from which all other scripts and, ultimately, more complex components, can be created. Clone `zerg-larva` and mutate it into anything else.\
