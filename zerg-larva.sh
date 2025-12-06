@@ -127,7 +127,7 @@ fi
 
 # name:     log()
 # summary:  Easy logging
-# usage:    log <LEVEL> <Log message>
+# usage:    log <LEVEL> <MESSAGE>
 # example:  log "INFO" "This is an informational message."
 # input:    $1: LEVEL (FATAL, ERROR, WARN, INFO, DEBUG)
 #           $2: Log message

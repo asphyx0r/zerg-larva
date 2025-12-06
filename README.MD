@@ -186,12 +186,29 @@ Notes:
 
 # Script Components
 
-## Functions
+## Built-in Functions
 
-- **log(level, message)**
-	- Arguments: level (FATAL|ERROR|WARN|INFO|DEBUG), message (string)
-	- Goal: Print a timestamped log line with the given level.
-	- Return codes: exits with RC=3 if called with wrong number of arguments.
+### log(level, message)
+
+------------------------------------------------------------------------------
+ **NAME**
+&emsp;&emsp;`log()` - Print a log line
+
+ **SYNOPSIS**
+&emsp; &emsp;`log <LEVEL> <MESSAGE>`
+
+ **DESCRIPTION**
+&emsp;&emsp;Displays the MESSAGE preceded by a timestamp and the LEVEL of the event
+&emsp;&emsp;The local variable `functionName` is also displayed if available and defined.
+&emsp;&emsp;Level can be (FATAL|ERROR|WARN|INFO|DEBUG)
+
+ **EXIT STATUS**
+&emsp;&emsp;3  `RC_INTERNAL_LOG_ARGS`: Wrong number of arguments.
+
+ **OUTPUT**
+ &emsp;&emsp;`<LEVEL TIMESTAMP - FUNCTION: LOG LINE`
+ 
+------------------------------------------------------------------------------
 
 - **dump()**
 	- Arguments: none
