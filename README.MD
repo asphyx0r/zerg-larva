@@ -6,23 +6,23 @@ me@asphyx.fr
 
 ## Changelog
 
-### v1.0.0 - Initial version (13/10/2025)
-* 3bf9436 2025-11-08 Repo init: first commit
-
-### v1.0.1 - Added Git default files (08/11/2025)
-* 7c75b01 2025-11-08 Added Git default files
-
-### v1.0.2 - Improved security fixes (24/11/2025)
-* c5ffbf3 2025-11-22 Update README and script metadata for clarity and consistency, improved security fixes
-* c8135a4 2025-11-21 Add safety settings to improve script robustness
-* 5fadc91 2025-11-21 Enhance script header with detailed metadata and prerequisites
-
-### v1.0.3 - Improved return code management (30/11/2025)
+### v1.0.3 - Improved return code management (2025-11-30)
 * 66cc2b2 2025-11-30 Return codes documentation
 * 8d1bad3 2025-11-29 Improved return code management in zerg-larva.sh
 * 3992a05 2025-11-29 Fixed wrong line break in README.MD
 * f655366 2025-11-29 Updated .gitignore to exclude more files
 * d707968 2025-11-27 Git customization
+
+### v1.0.2 - Update README and script metadata for clarity and consistency, improved security fixes (2025-11-24)
+* c5ffbf3 2025-11-22 Update README and script metadata for clarity and consistency, improved security fixes
+* c8135a4 2025-11-21 Add safety settings to improve script robustness
+* 5fadc91 2025-11-21 Enhance script header with detailed metadata and prerequisites
+
+### v1.0.1 - Added Git default files (2025-11-08)
+* 7c75b01 2025-11-08 Added Git default files
+
+### v1.0.0 - Initial version/First commit (2025-11-08)
+* 3bf9436 2025-11-08 Repo init: first commit
 
 ## Description
 
@@ -78,18 +78,7 @@ readonly APPNAME="ApplicationName"
 readonly VERSION="v1.0.0"
 ```
 
-6. **Line 39** to **Line 45**, list all the exit codes used by the script. The free range is **0–125**:
-
-**0**:       Success\
-**1-125**:   Application errors (available for your script)\
-**126**:     The command exists but cannot be executed\
-**127**:     The command does not exist\
-**128+N**:   The command terminated due to signal N\
-Example: 130 = 128+2\
-SIGINT = 2
-
-**126–127**: Reserved by POSIX for standard system error cases.\
-**128–255**: Reserved for signal terminations.
+6. **Line 39** to **Line 45**, list all the exit codes used by the script.
 
 ```bash
 readonly RC_OK=0
@@ -100,6 +89,23 @@ readonly RC_MISSING_DIRECTORY=4
 readonly RC_INVALID_DIRECTORY=5
 readonly RC_UNKNOWN=125
 ```
+
+The free range is **0–125**:
+
+Codes | Description
+--- | ---
+**0** | Success
+**1-125** | Application errors (available for your script)
+**126** | The command exists but cannot be executed
+**127** | The command does not exist
+**128+N** | The command terminated due to signal N. Example: 130 = 128+2, SIGINT = 2
+
+Codes | Description
+--- | ---
+**126–127** | Reserved by POSIX for standard system error cases.
+**128–255** | Reserved for signal terminations.
+
+
 
 7. **Line 56** and later, assign a variable and a default value for each of your command line argument:
 
