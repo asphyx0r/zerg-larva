@@ -6,6 +6,12 @@ me@asphyx.fr
 
 ## Changelog
 
+### v1.0.4 - Automatic GHANGELOG generation (2025-12-06)
+* 4281261 2025-12-06 Added tools used to generate CHANGELOG
+* 4d6d9a9 2025-12-06 Update CHANGELOG for v1.0.4
+* 99f8474 2025-12-06 Update CHANGELOG for v1.0.4
+* 1e0c5fd 2025-11-30 Updated changelog with v1.0.3 commits
+
 ### v1.0.3 - Improved return code management (2025-11-30)
 * 66cc2b2 2025-11-30 Return codes documentation
 * 8d1bad3 2025-11-29 Improved return code management in zerg-larva.sh
