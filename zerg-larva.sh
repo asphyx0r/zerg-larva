@@ -37,7 +37,7 @@ readonly VERSION="v1.0.0"
 # RC_INTERNAL_LOG_ARGS:   3 — Internal error: `log()` called with wrong number of arguments
 # RC_MISSING_DIRECTORY:   4 — Missing DIRECTORY for `-d|--directory` option (directory argument not provided or invalid)
 # RC_INVALID_DIRECTORY:   5 — Provided DIRECTORY does not exist or is not accessible
-# RC_UNKNOWN:           125 — Unknown error
+# RC_UNKNOWN:             125 — Unknown error
 readonly RC_OK=0
 readonly RC_MISSING_OPERAND=1
 readonly RC_UNKNOWN_OPERAND=2
