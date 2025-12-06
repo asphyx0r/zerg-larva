@@ -124,7 +124,16 @@ if [[ -n "$argDirectory" && ! -d "$argDirectory" && ! -r "$argDirectory" && ! -x
 fi
 
 # -[ FUNCTIONS        ]---------------------------------------------------------
-# Easy logging, use: log "LEVEL" "Log message"
+
+# name:     log()
+# summary:  Easy logging
+# usage:    log <LEVEL> <Log message>
+# example:  log "INFO" "This is an informational message."
+# input:    $1: LEVEL (FATAL, ERROR, WARN, INFO, DEBUG)
+#           $2: Log message
+# output:   String to STDOUT
+# return:   None, output log message to STDOUT
+# errors:   $RC_INTERNAL_LOG_ARGS if not called with 2 arguments
 function log() {
 
     # Used for logging/debugging purpose
@@ -157,7 +166,14 @@ function log() {
 
 }
 
-# Dump script informations for debug purpose
+# name:     dump()
+# summary:  Dump script informations for debug purpose
+# usage:    dump
+# example:  dump
+# input:    None
+# output:   String to STDOUT
+# return:   None, output log messages to STDOUT
+# errors:   None
 function dump() {
 
     # Used for logging/debugging purpose
@@ -171,7 +187,15 @@ function dump() {
 }
 
 # -[ USER FUNCTIONS   ]---------------------------------------------------------
-# Some default function template/skeleton
+
+# name:     getTimestamp()
+# summary:  Some default function template/skeleton
+# usage:    getTimestamp
+# example:  getTimestamp
+# input:    None
+# output:   String to STDOUT
+# return:   None, output string to STDOUT
+# errors:   None
 function getTimestamp() {
 
     # Used for logging/debugging purpose
