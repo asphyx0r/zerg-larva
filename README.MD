@@ -231,10 +231,27 @@ Notes:
  
 ------------------------------------------------------------------------------
 
-- **getTimestamp()**
-	- Arguments: none
-	- Goal: Return a compact timestamp string (YYYYmmdd-HHMMSS).
-	- Return codes: none
+### getTimestamp()
+
+------------------------------------------------------------------------------
+ **NAME**
+&emsp;&emsp;`getTimestamp()` - Return a timestamp string
+
+ **SYNOPSIS**
+&emsp; &emsp;`getTimestamp`
+
+ **DESCRIPTION**
+&emsp;&emsp;Return a compact timestamp string.
+&emsp;&emsp;This function is a sample function to be used as template/skeleton
+&emsp;&emsp;The purpose is to populate the User Functions script section.
+
+ **EXIT STATUS**
+&emsp;&emsp;None
+
+ **OUTPUT**
+ &emsp;&emsp;Timestamp string (`YYYYmmdd-HHMMSS`)
+
+------------------------------------------------------------------------------    
 
 - **main()**
 	- Arguments: none (uses global args)
