@@ -210,10 +210,26 @@ Notes:
  
 ------------------------------------------------------------------------------
 
-- **dump()**
-	- Arguments: none
-	- Goal: Print debug information about the script (name, path, full path, arguments) using `log`.
-	- Return codes: none directly (may exit via `log` if `log` fails).
+### dump()
+
+------------------------------------------------------------------------------
+ **NAME**
+&emsp;&emsp;`dump()` - Print debug information
+
+ **SYNOPSIS**
+&emsp; &emsp;`dump`
+
+ **DESCRIPTION**
+&emsp;&emsp;Print debug information about the script (name, path, full path, arguments).
+&emsp;&emsp;The `log()` function is used to output the system variables.
+
+ **EXIT STATUS**
+&emsp;&emsp;None directly (may exit via `log()` if `log()` fails).
+
+ **OUTPUT**
+ &emsp;&emsp;`script name`,`script path`, `script full path`, `arguments`
+ 
+------------------------------------------------------------------------------
 
 - **getTimestamp()**
 	- Arguments: none
