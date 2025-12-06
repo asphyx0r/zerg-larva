@@ -47,7 +47,7 @@ readonly RC_INVALID_DIRECTORY=5
 readonly RC_UNKNOWN=125
 
 # -[ INTERNAL GLOBALS ]---------------------------------------------------------
-# System variables, I will use it later
+# Default system variables, I will use it later. DO NOT MODIFY.
 RC=$RC_OK
 functionName="undef()"
 readonly scriptName="${0##*/}"
@@ -229,6 +229,10 @@ function main() {
   log "INFO" "Successfully connected to the database"
   log "DEBUG" "Information for debugging purpose only"
   log "WRONG" "This value is not allowed, I don't trust you"
+
+  # Example: set RC to non-zero if a simulated error occurs
+  # Uncomment the next line to simulate an error exit
+  # RC=$RC_UNKNOWN
 
     log "INFO" "$APPNAME $VERSION: End ($RC)"
     exit "$RC"

@@ -253,10 +253,29 @@ Notes:
 
 ------------------------------------------------------------------------------    
 
-- **main()**
-	- Arguments: none (uses global args)
-	- Goal: Primary driver: logs start/end, optionally dumps debug info if verbose, demonstrates logging and exits with `$RC`.
-	- Return codes: exits with the current value of `$RC` (default 0 unless changed earlier).
+### main()
+
+ ------------------------------------------------------------------------------
+ **NAME**
+&emsp;&emsp;`main()` - Run the program
+
+ **SYNOPSIS**
+&emsp; &emsp;`main`
+
+ **DESCRIPTION**
+&emsp;&emsp;Primary driver.
+&emsp;&emsp;Logs start/end, optionally dumps debug info if verbose, demonstrates logging and exits with `$RC`.
+&emsp;&emsp;Your custom code must be called inside the `main()` function.
+&emsp;&emsp;Replace the content of the `main()`function with your Business Logic Functions.
+&emsp;&emsp;Change the value of `$RC` to handle errors and exit properly.
+
+ **EXIT STATUS**
+&emsp;&emsp;Exits with the current value of `$RC` (default 0 unless changed earlier).
+
+ **OUTPUT**
+ &emsp;&emsp;None
+ 
+------------------------------------------------------------------------------   
 
 ## Exit codes (RC)
 
