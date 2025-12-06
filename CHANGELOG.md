@@ -1,5 +1,17 @@
 
-## 1.0.5
+## v1.0.6
+References | Description | Author(s)
+--- | --- | ---
+930a638 | Added man section for main() function | asphyx
+cd059ad | Added man section for getTimestamp() function | asphyx
+2c72c41 | Added man section for dump() function | asphyx
+e71dd2a | Added man section for log() function | asphyx
+50b3b37 | Adding Bash docstrings to functions | asphyx
+293298e | Fixed typo in RC list | asphyx
+a966baf | Improvements to the script structure and comments | asphyx
+dd3c28d | Update CHANGELOG/README for v1.0.5 | asphyx
+
+## v1.0.5
 References | Description | Author(s)
 --- | --- | ---
 f2a748b | Update CHANGELOG/README for v1.0.5 | asphyx
@@ -38,4 +50,4 @@ References | Description | Author(s)
 --- | --- | ---
 3bf9436 | Repo init: first commit | asphyx
 
-Updated: 2025-12-06 12:53:38
+Updated: 2025-12-06 15:53:14
