@@ -5,6 +5,8 @@
 # Usage       : script_name.sh [options]
 # Author      : Your Name - Your Email
 # Version     : v1.0.0
+# Date        : 2025-12-01
+# License     : MIT License
 #
 # Prerequisites:
 #   - Linux system running Debian 11 or later
@@ -17,17 +19,17 @@
 #   - This script is not POSIX-compliant; do not run it under /bin/sh.
 #
 
-# Safety settings
+# -[ SAFETY SETTINGS  ]---------------------------------------------------------
 set -o errexit
 set -o nounset
 set -o pipefail
 IFS=$' \t\n'
 
-# Global variables
+# -[ USER GLOBALS     ]---------------------------------------------------------
 readonly APPNAME="ApplicationName"
 readonly VERSION="v1.0.0"
 
-# Return codes
+# -[ RETURN CODES     ]---------------------------------------------------------
 # Exit code constants (local to this script)
 # RC_OK:                  0 — Success / default (no error)
 # RC_MISSING_OPERAND:     1 — Missing operand (no arguments provided)
@@ -44,6 +46,7 @@ readonly RC_MISSING_DIRECTORY=4
 readonly RC_INVALID_DIRECTORY=5
 readonly RC_UNKNOWN=125
 
+# -[ INTERNAL GLOBALS ]---------------------------------------------------------
 # System variables, I will use it later
 RC=$RC_OK
 functionName="undef()"
@@ -52,6 +55,7 @@ readonly scriptPath="${0%/*}"
 readonly scriptFullPath="${0}"
 scriptArgs=${@}
 
+# -[ ARGUMENTS        ]---------------------------------------------------------
 # Arguments assignment, CLI/POSIX flavour
 argHelp=false
 argVersion=false
@@ -119,6 +123,7 @@ if [[ -n "$argDirectory" && ! -d "$argDirectory" && ! -r "$argDirectory" && ! -x
     exit "$RC"
 fi
 
+# -[ FUNCTIONS        ]---------------------------------------------------------
 # Easy logging, use: log "LEVEL" "Log message"
 function log() {
 
@@ -165,6 +170,7 @@ function dump() {
 
 }
 
+# -[ USER FUNCTIONS   ]---------------------------------------------------------
 # Some default function template/skeleton
 function getTimestamp() {
 
@@ -175,6 +181,7 @@ function getTimestamp() {
 
 }
 
+# -[ MAIN             ]---------------------------------------------------------
 # Go-go-go Gadgetomain!
 function main() {
 
