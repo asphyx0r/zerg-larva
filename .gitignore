@@ -35,3 +35,7 @@ log/**
 *.gz
 *.tgz
 *.7z
+
+# Internal tools
+changelog.sh
+showlog.sh
