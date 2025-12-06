@@ -1,4 +1,10 @@
 
+## v1.0.7
+References | Description | Author(s)
+--- | --- | ---
+80ecf69 | Added die() and checkdep() functions | asphyx
+ad08470 | Added man section for main() function | asphyx
+
 ## v1.0.6
 References | Description | Author(s)
 --- | --- | ---
@@ -50,4 +56,4 @@ References | Description | Author(s)
 --- | --- | ---
 3bf9436 | Repo init: first commit | asphyx
 
-Updated: 2025-12-06 15:53:14
+Updated: 2025-12-06 19:36:18

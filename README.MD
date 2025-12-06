@@ -6,7 +6,21 @@ me@asphyx.fr
 
 ## Changelog
 
-### 1.0.5 - Update CHANGELOG/README for v1.0.5 (2025-12-06)
+### v1.0.7 - Added die() and checkdep() functions (2025-12-06)
+* 80ecf69 2025-12-06 Added die() and checkdep() functions
+* ad08470 2025-12-06 Added man section for main() function
+
+### v1.0.6 - 'man' section style documentation (2025-12-06)
+* 930a638 2025-12-06 Added man section for main() function
+* cd059ad 2025-12-06 Added man section for getTimestamp() function
+* 2c72c41 2025-12-06 Added man section for dump() function
+* e71dd2a 2025-12-06 Added man section for log() function
+* 50b3b37 2025-12-06 Adding Bash docstrings to functions
+* 293298e 2025-12-06 Fixed typo in RC list
+* a966baf 2025-12-06 Improvements to the script structure and comments
+* dd3c28d 2025-12-06 Update CHANGELOG/README for v1.0.5
+
+### v1.0.5 - Update CHANGELOG/README for v1.0.5 (2025-12-06)
 * f2a748b 2025-12-06 Update CHANGELOG/README for v1.0.5
 
 ### v1.0.4 - Automatic GHANGELOG generation (2025-12-06)
@@ -87,7 +101,7 @@ readonly APPNAME="ApplicationName"
 readonly VERSION="v1.0.0"
 ```
 
-6. **Line 39** to **Line 45**, list all the exit codes used by the script.
+6. **Line 42** to **Line 50**, list all the exit codes used by the script.
 
 ```bash
 readonly RC_OK=0
@@ -96,6 +110,8 @@ readonly RC_UNKNOWN_OPERAND=2
 readonly RC_INTERNAL_LOG_ARGS=3
 readonly RC_MISSING_DIRECTORY=4
 readonly RC_INVALID_DIRECTORY=5
+readonly RC_INTERNAL_DEP_ARGS=6
+readonly RC_MISSING_PREREQ=7
 readonly RC_UNKNOWN=125
 ```
 
@@ -210,6 +226,48 @@ Notes:
  
 ------------------------------------------------------------------------------
 
+### die(exit_code, message)
+
+------------------------------------------------------------------------------
+ **NAME**
+&emsp;&emsp;`die()` - Display error message then exit with return code
+
+ **SYNOPSIS**
+&emsp; &emsp;`die <EXIT_CODE> <MESSAGE>`
+
+ **DESCRIPTION**
+&emsp;&emsp;Displays the MESSAGE on STDOUT (error message)
+&emsp;&emsp;Exits with the provided EXIT_CODE
+
+ **EXIT STATUS**
+&emsp;&emsp;`<EXIT_CODE>`
+
+ **OUTPUT**
+ &emsp;&emsp;`ERROR <MESSAGE>`
+ 
+------------------------------------------------------------------------------
+
+### checkdep(command)
+
+------------------------------------------------------------------------------
+ **NAME**
+&emsp;&emsp;`checkdep()` - Verify if required command is available.
+
+ **SYNOPSIS**
+&emsp; &emsp;`checkdep <COMMAND>`
+
+ **DESCRIPTION**
+&emsp;&emsp;Check if the given command exists in PATH.
+&emsp;&emsp;Return `true` if the dependency is found, `false` otherwise.
+
+ **EXIT STATUS**
+&emsp;&emsp;6  `RC_INTERNAL_DEP_ARGS`: Wrong number of arguments.
+
+ **OUTPUT**
+ &emsp;&emsp;Search result as DEBUG message (using `log` function)
+ 
+------------------------------------------------------------------------------
+
 ### dump()
 
 ------------------------------------------------------------------------------
@@ -285,6 +343,8 @@ Notes:
 - 3 — Internal error: `log()` called with wrong number of arguments.
 - 4 — Missing DIRECTORY for `-d|--directory` option (directory argument not provided or invalid).
 - 5 — Provided DIRECTORY does not exist or is not accessible.
+- 6 — Internal error: `checkdep()` called with wrong number of arguments
+- 7 — Missing prerequisite (required command not found)
 
 ## Dependencies
 
