@@ -268,6 +268,31 @@ Notes:
  **OUTPUT**
  &emsp;&emsp;Contents of `<<-EOF ... EOF` block
  
+### trace()
+
+------------------------------------------------------------------------------
+ **NAME**
+&emsp;&emsp;`trace()` - Enable '`set -x`' tracing for debugging purpose
+
+ **SYNOPSIS**
+&emsp; &emsp;`trace BOOLEAN`
+&emsp; &emsp; 0 : Disable tracing
+&emsp; &emsp; 1 : Enable tracing
+
+ **DESCRIPTION**
+&emsp;&emsp;Enable '`set -x`' for local debugging.
+&emsp;&emsp;Your tracked code block should be enclosed between two `trace`calls:
+&emsp;&emsp;`trace 1`
+&emsp;&emsp;`<...>`
+&emsp;&emsp;`trace 0`
+
+ **EXIT STATUS**
+&emsp;&emsp;0 : Success
+&emsp;&emsp;RC_INTERNAL_TRC_ARGS if called with wrong number of arguments (1 expected)
+
+ **OUTPUT**
+ &emsp;&emsp;Bash debugging information
+ 
 ------------------------------------------------------------------------------
 
 ### die(exit_code, message)

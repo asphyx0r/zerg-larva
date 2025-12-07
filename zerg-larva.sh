@@ -31,6 +31,7 @@ readonly VERSION="v1.0.0"
 
 # -[ RETURN CODES     ]---------------------------------------------------------
 # Exit code constants (local to this script)
+# The free range is 0–125
 # RC_OK:                  0 — Success / default (no error)
 # RC_MISSING_OPERAND:     1 — Missing operand (no arguments provided)
 # RC_UNKNOWN_OPERAND:     2 — Unknown operand (invalid option passed)
@@ -39,6 +40,7 @@ readonly VERSION="v1.0.0"
 # RC_INVALID_DIRECTORY:   5 — Provided DIRECTORY does not exist or is not accessible
 # RC_INTERNAL_DEP_ARGS:   6 — Internal error: `checkdep()` called with wrong number of arguments
 # RC_MISSING_PREREQ:      7 — Missing prerequisite (required command not found)
+# RC_INTERNAL_TRC_ARGS:   8 — Internal error: `trace()` called with wrong number of arguments
 # RC_UNKNOWN:             125 — Unknown error
 readonly RC_OK=0
 readonly RC_MISSING_OPERAND=1
@@ -48,6 +50,7 @@ readonly RC_MISSING_DIRECTORY=4
 readonly RC_INVALID_DIRECTORY=5
 readonly RC_INTERNAL_DEP_ARGS=6
 readonly RC_MISSING_PREREQ=7
+readonly RC_INTERNAL_TRC_ARGS=8
 readonly RC_UNKNOWN=125
 
 # -[ INTERNAL GLOBALS ]---------------------------------------------------------
@@ -179,10 +182,14 @@ function log() {
 # return:   None
 # errors:   Exits with the provided EXIT_CODE
 die() {
+
+	local functionName="die()"
+
 	local exit_code="$1"
 	shift
 	log "ERROR" "$@"
 	exit "$exit_code"
+
 }
 
 # name:     help()
@@ -227,9 +234,41 @@ list_exit_codes() {
 		RC=5 : Provided DIRECTORY does not exist (the target directory must exist and readable).
 		RC=6 : Internal error: checkdep() called with wrong number of arguments
 		RC=7 : Missing prerequisite (required command not found)
+		RC=8 : Internal error: trace() called with wrong number of arguments
+		RC=125 : Unknown error.
 	EOF
 
 	return 0
+}
+
+# name:     trace()
+# summary:  Enable 'set -x' tracing for debugging purpose
+# usage:    trace BOOLEAN
+# example:  trace 1
+# input:    $1: 1 or 0 (enable/disable tracing)
+# output:   Debugging information to STDERR
+# return:   0 on success
+# errors:   RC_INTERNAL_TRC_ARGS if called with wrong number of arguments (1 expected)
+# shellcheck disable=SC2329
+trace() {
+
+	local functionName="trace()"
+
+	# Arguments assignation
+	if [ "$#" -ne 1 ]; then
+		echo -e "\ttrace(): Error: 1 argument required. Usage: trace BOOLEAN"
+		RC=$RC_INTERNAL_TRC_ARGS
+		return $RC_INTERNAL_TRC_ARGS
+	fi
+
+	if [[ "$1" -eq 1 ]]; then
+		set -x
+	else
+		set +x 2>/dev/null || true
+	fi
+
+	return 0
+
 }
 
 # name:     checkdep()
@@ -335,6 +374,12 @@ function main() {
 		die "$RC_MISSING_PREREQ" "A required dependency '$sampleCommand' is missing, cannot continue."
 	fi
 
+	# Example: Sample line for debug mode
+	#trace 1
+	#export sampleVar="This is a sample variable"
+	#log "DEBUG" "Sample variable value: $sampleVar"
+	#trace 0
+
 	# Example: Some log level examples
 	log "FATAL" "This is a fatal error, exiting..."
 	log "ERROR" "Unable to connect the database"
@@ -363,14 +408,6 @@ elif [[ "$argVersion" == true ]]; then
 	echo "$APPNAME $VERSION"
 	exit 0
 elif [[ "$argListExitCodes" == true ]]; then
-	# cat <<-EOF
-	# 	RC=0 : Success / default (no error).
-	# 	RC=1 : Missing operand (no arguments provided).
-	# 	RC=2 : Unknown operand (invalid option passed).
-	# 	RC=3 : Internal error: log() called with wrong number of arguments.
-	# 	RC=4 : Missing DIRECTORY for -d|--directory option (directory argument not provided or invalid).
-	# 	RC=5 : Provided DIRECTORY does not exist (the target directory must exist and readable).
-	# EOF
 	list_exit_codes
 	exit 0
 else
