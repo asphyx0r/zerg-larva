@@ -216,6 +216,7 @@ Notes:
  **DESCRIPTION**
 &emsp;&emsp;Displays the MESSAGE preceded by a timestamp and the LEVEL of the event
 &emsp;&emsp;The local variable `functionName` is also displayed if available and defined.
+&emsp;&emsp;If not found, the default `undef()` function name is used.
 &emsp;&emsp;Level can be (FATAL|ERROR|WARN|INFO|DEBUG)
 
  **EXIT STATUS**
@@ -331,6 +332,8 @@ Notes:
 
  **EXIT STATUS**
 &emsp;&emsp;6  `RC_INTERNAL_DEP_ARGS`: Wrong number of arguments.
+&emsp;&emsp;Calling the function with a wrong number of arguments will `exit()`.
+&emsp;&emsp;(Being unable to check dependencies is a fatal error)
 
  **OUTPUT**
  &emsp;&emsp;Search result as DEBUG message (using `log` function)
@@ -351,7 +354,7 @@ Notes:
 &emsp;&emsp;The `log()` function is used to output the system variables.
 
  **EXIT STATUS**
-&emsp;&emsp;None directly (may exit via `log()` if `log()` fails).
+&emsp;&emsp;0
 
  **OUTPUT**
  &emsp;&emsp;`script name`,`script path`, `script full path`, `arguments`
@@ -373,7 +376,7 @@ Notes:
 &emsp;&emsp;The purpose is to populate the User Functions script section.
 
  **EXIT STATUS**
-&emsp;&emsp;None
+&emsp;&emsp;0
 
  **OUTPUT**
  &emsp;&emsp;Timestamp string (`YYYYmmdd-HHMMSS`)
@@ -397,7 +400,7 @@ Notes:
 &emsp;&emsp;Change the value of `$RC` to handle errors and exit properly.
 
  **EXIT STATUS**
-&emsp;&emsp;Exits with the current value of `$RC` (default 0 unless changed earlier).
+&emsp;&emsp;Return with the current value of `$RC` (default 0 unless changed earlier).
 
  **OUTPUT**
  &emsp;&emsp;None

@@ -139,7 +139,7 @@ fi
 # input:    $1: LEVEL (FATAL, ERROR, WARN, INFO, DEBUG)
 #           $2: Log message
 # output:   String to STDOUT
-# return:   None, output log message to STDOUT
+# return:   0 in case of success
 # errors:   $RC_INTERNAL_LOG_ARGS if not called with 2 arguments
 function log() {
 
@@ -167,6 +167,8 @@ function log() {
 		esac
 
 		echo -e "[$level]\t$(date +'%Y-%m-%d %H:%M:%S') - $functionName: $message"
+
+		return 0
 
 	fi
 
@@ -201,6 +203,9 @@ die() {
 # return:   0
 # errors:   None
 help() {
+
+	local functionName="help()"
+
 	cat <<-EOF
 		Usage: $scriptName [OPTION]
 		Do anything with the DIRECTORY, if it really exists.
@@ -225,6 +230,9 @@ help() {
 # return:   0
 # errors:   None
 list_exit_codes() {
+
+	local functionName="list_exit_codes()"
+
 	cat <<-EOF
 		RC=0 : Success / default (no error).
 		RC=1 : Missing operand (no arguments provided).
@@ -256,9 +264,9 @@ trace() {
 
 	# Arguments assignation
 	if [ "$#" -ne 1 ]; then
-		echo -e "\ttrace(): Error: 1 argument required. Usage: trace BOOLEAN"
+		echo -e "\t$functionName: Error: 1 argument required. Usage: trace BOOLEAN"
 		RC=$RC_INTERNAL_TRC_ARGS
-		return $RC_INTERNAL_TRC_ARGS
+		return "$RC_INTERNAL_TRC_ARGS"
 	fi
 
 	if [[ "$1" -eq 1 ]]; then
@@ -278,7 +286,7 @@ trace() {
 # input:    $1: DEPENDENCY (string, command to check)
 # output:   Check result to STDOUT (via log function)
 # return:   True if the dependency is found, False otherwise
-# errors:   RC_INTERNAL_DEP_ARGS if called with wrong number of arguments (1 expected)
+# errors:   Exit with RC_INTERNAL_DEP_ARGS if called with wrong number of arguments (1 expected)
 function checkdep() {
 
 	# Used for logging/debugging purpose
@@ -289,7 +297,9 @@ function checkdep() {
 	if [[ -z ${1:-} ]]; then
 		log "ERROR" "Missing argument DEPENDENCY. Usage: checkdep \"DEPENDENCY\""
 		RC=$RC_INTERNAL_DEP_ARGS
+		# Being unable to check dependencies is a fatal error
 		exit "$RC"
+		#return "$RC"
 	else
 
 		local commandCheck="$1"
@@ -314,7 +324,7 @@ function checkdep() {
 # example:  dump
 # input:    None
 # output:   String to STDOUT
-# return:   None, output log messages to STDOUT
+# return:   0
 # errors:   None
 function dump() {
 
@@ -327,6 +337,8 @@ function dump() {
 	# Properly display all array elements: https://www.shellcheck.net/wiki/SC2128
 	log "DEBUG" "Script arguments: ${scriptArgs[*]}"
 
+	return 0
+
 }
 
 # -[ USER FUNCTIONS   ]---------------------------------------------------------
@@ -337,7 +349,7 @@ function dump() {
 # example:  getTimestamp
 # input:    None
 # output:   String to STDOUT
-# return:   None, output string to STDOUT
+# return:   0
 # errors:   None
 function getTimestamp() {
 
@@ -346,6 +358,8 @@ function getTimestamp() {
 
 	# echo "$(date '+%Y%m%d-%H%M%S')"
 	date '+%Y%m%d-%H%M%S'
+
+	return 0
 
 }
 
@@ -395,7 +409,7 @@ function main() {
 	# Insert your main code above this line
 
 	log "INFO" "$APPNAME $VERSION: End ($RC)"
-	exit "$RC"
+	return "$RC"
 }
 
 # -[ CORE             ]---------------------------------------------------------
@@ -412,4 +426,5 @@ elif [[ "$argListExitCodes" == true ]]; then
 	exit 0
 else
 	main
+	exit "$RC"
 fi
