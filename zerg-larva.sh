@@ -185,6 +185,53 @@ die() {
 	exit "$exit_code"
 }
 
+# name:     help()
+# summary:  Display help and script usage information
+# usage:    help
+# example:  help
+# input:    None
+# output:   String to STDOUT (script usage)
+# return:   0
+# errors:   None
+help() {
+	cat <<-EOF
+		Usage: $scriptName [OPTION]
+		Do anything with the DIRECTORY, if it really exists.
+
+		Mandatory arguments to long options are mandatory for short options too.
+		  -d, --directory DIRECTORY   set directory to work on
+		  -v, --verbose               print debbuging information
+		  -h, --help                  display this help and exit
+		      --version               output version information and exit
+		      --list-exit-codes       list of exit codes
+	EOF
+
+	return 0
+}
+
+# name:     list_exit_codes()
+# summary:  Display script exit codes information
+# usage:    list_exit_codes
+# example:  list_exit_codes
+# input:    None
+# output:   String to STDOUT (RC list)
+# return:   0
+# errors:   None
+list_exit_codes() {
+	cat <<-EOF
+		RC=0 : Success / default (no error).
+		RC=1 : Missing operand (no arguments provided).
+		RC=2 : Unknown operand (invalid option passed).
+		RC=3 : Internal error: log() called with wrong number of arguments.
+		RC=4 : Missing DIRECTORY for -d|--directory option (directory argument not provided or invalid).
+		RC=5 : Provided DIRECTORY does not exist (the target directory must exist and readable).
+		RC=6 : Internal error: checkdep() called with wrong number of arguments
+		RC=7 : Missing prerequisite (required command not found)
+	EOF
+
+	return 0
+}
+
 # name:     checkdep()
 # summary:  Check dependencies. Verify if required command is available.
 # usage:    checkdep <DEPENDENCY>
@@ -272,21 +319,23 @@ function main() {
 
 	log "INFO" "$APPNAME $VERSION: Start"
 
-	# Sample line for the verbose flag
+	# Insert your main code below this line
+
+	# Example: Sample line for the verbose flag
 	if [[ "$argVerbose" == true ]]; then
 		dump
 	fi
 
-	# Sample line for function output
+	# SExample: ample line for function output
 	log "INFO" "$(getTimestamp)"
 
-	# Sample lines for dependency check
+	# Example: Sample lines for dependency check
 	export sampleCommand="bash"
 	if checkdep "$sampleCommand"; then
 		die "$RC_MISSING_PREREQ" "A required dependency '$sampleCommand' is missing, cannot continue."
 	fi
 
-	# Some log level examples
+	# Example: Some log level examples
 	log "FATAL" "This is a fatal error, exiting..."
 	log "ERROR" "Unable to connect the database"
 	log "WARN" "Configuration file missing, using default values"
@@ -298,36 +347,31 @@ function main() {
 	# Uncomment the next line to simulate an error exit
 	# RC=$RC_UNKNOWN
 
+	# Insert your main code above this line
+
 	log "INFO" "$APPNAME $VERSION: End ($RC)"
 	exit "$RC"
 }
 
+# -[ CORE             ]---------------------------------------------------------
 # Here is the core: Display help, version or run main()
+# Do not modify this part unless you know what you are doing
 if [[ "$argHelp" == true ]]; then
-	cat <<-EOF
-		Usage: $scriptName [OPTION]
-		Do anything with the DIRECTORY, if it really exists.
-
-		Mandatory arguments to long options are mandatory for short options too.
-		  -d, --directory DIRECTORY   set directory to work on
-		  -v, --verbose               print debbuging information
-		  -h, --help                  display this help and exit
-		      --version               output version information and exit
-		      --list-exit-codes       list of exit codes
-	EOF
+	help
 	exit 0
 elif [[ "$argVersion" == true ]]; then
 	echo "$APPNAME $VERSION"
 	exit 0
 elif [[ "$argListExitCodes" == true ]]; then
-	cat <<-EOF
-		RC=0 : Success / default (no error).
-		RC=1 : Missing operand (no arguments provided).
-		RC=2 : Unknown operand (invalid option passed).
-		RC=3 : Internal error: log() called with wrong number of arguments.
-		RC=4 : Missing DIRECTORY for -d|--directory option (directory argument not provided or invalid).
-		RC=5 : Provided DIRECTORY does not exist (the target directory must exist and readable).
-	EOF
+	# cat <<-EOF
+	# 	RC=0 : Success / default (no error).
+	# 	RC=1 : Missing operand (no arguments provided).
+	# 	RC=2 : Unknown operand (invalid option passed).
+	# 	RC=3 : Internal error: log() called with wrong number of arguments.
+	# 	RC=4 : Missing DIRECTORY for -d|--directory option (directory argument not provided or invalid).
+	# 	RC=5 : Provided DIRECTORY does not exist (the target directory must exist and readable).
+	# EOF
+	list_exit_codes
 	exit 0
 else
 	main

@@ -226,6 +226,50 @@ Notes:
  
 ------------------------------------------------------------------------------
 
+### help()
+
+------------------------------------------------------------------------------
+ **NAME**
+&emsp;&emsp;`help()` - Display help and script usage information
+
+ **SYNOPSIS**
+&emsp; &emsp;`help`
+
+ **DESCRIPTION**
+&emsp;&emsp;Displays the script usage information on STDOUT
+&emsp;&emsp;Modify the formatted block to fit you script arguments
+&emsp;&emsp;This block should contain all the arguments listed in the ARGUMENTS section, declared at the beginning of the script via appropriate variables.
+
+ **EXIT STATUS**
+&emsp;&emsp;0
+
+ **OUTPUT**
+ &emsp;&emsp;Contents of `<<-EOF ... EOF` block
+ 
+------------------------------------------------------------------------------
+
+### list_exit_codes()
+
+------------------------------------------------------------------------------
+ **NAME**
+&emsp;&emsp;`list_exit_codes()` - Display script exit codes information
+
+ **SYNOPSIS**
+&emsp; &emsp;`list_exit_codes`
+
+ **DESCRIPTION**
+&emsp;&emsp;List all script exit codes on STDOUT
+&emsp;&emsp;Modify the formatted block to fit you script arguments
+&emsp;&emsp;This block should contain all the codes listed in the RETURN CODES section, declared at the beginning of the script via constants.
+
+ **EXIT STATUS**
+&emsp;&emsp;0
+
+ **OUTPUT**
+ &emsp;&emsp;Contents of `<<-EOF ... EOF` block
+ 
+------------------------------------------------------------------------------
+
 ### die(exit_code, message)
 
 ------------------------------------------------------------------------------
