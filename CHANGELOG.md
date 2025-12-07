@@ -1,4 +1,14 @@
 
+## v1.0.8
+References | Description | Author(s)
+--- | --- | ---
+0f35450 | Documentation improvement | asphyx
+da96409 | Fixed typo in main() comment | asphyx
+d4d0075 | Correction of the function return method | asphyx
+b85cafe | Added trace() function | asphyx
+72c14d0 | Added help() and list_exit_codes() functions | asphyx
+c7ecbda | Added die() and checkdep() functions | asphyx
+
 ## v1.0.7
 References | Description | Author(s)
 --- | --- | ---
@@ -56,4 +66,4 @@ References | Description | Author(s)
 --- | --- | ---
 3bf9436 | Repo init: first commit | asphyx
 
-Updated: 2025-12-06 19:36:18
+Updated: 2025-12-07 13:54:21

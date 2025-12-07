@@ -382,6 +382,9 @@ function main() {
 	# Example: Sample line for function output
 	log "INFO" "$(getTimestamp)"
 
+	# Example: Sample line for directory argument
+	log "INFO" "Target directory is: $argDirectory"
+
 	# Example: Sample lines for dependency check
 	export sampleCommand="bash"
 	if checkdep "$sampleCommand"; then
