@@ -379,7 +379,7 @@ function main() {
 		dump
 	fi
 
-	# SExample: ample line for function output
+	# Example: Sample line for function output
 	log "INFO" "$(getTimestamp)"
 
 	# Example: Sample lines for dependency check
