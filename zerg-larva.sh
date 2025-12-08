@@ -358,6 +358,41 @@ function dump() {
 
 }
 
+# name:     stacktrace()
+# summary:  Generate stack trace for debugging purpose
+# usage:    stacktrace
+# example:  stacktrace
+# input:    None
+# output:   Display stack trace to STDOUT
+# return:   0
+# errors:   None
+stacktrace() {
+
+    local depth="${#FUNCNAME[@]}"
+    local i
+
+    printf "\tStack trace:\n"
+
+    # stacktrace starts at 1 to skip the current function (stacktrace)
+    for (( i=1; i<depth; i++ )); do
+
+        local func="${FUNCNAME[$i]}"
+        local file="${BASH_SOURCE[$i]##*/}"
+        local line="${BASH_LINENO[$((i-1))]}"
+
+        # Identation based on stack depth
+        local indent=""
+        for (( n=1; n<i; n++ )); do
+            indent+="  "
+        done
+
+        printf '\t%s↳ %s (%s:%s)\n' "$indent" "$func" "$file" "$line"
+
+    done
+
+	return 0
+}
+
 # -[ USER FUNCTIONS   ]---------------------------------------------------------
 
 # name:     getTimestamp()
@@ -372,7 +407,7 @@ function getTimestamp() {
 
 	# echo "$(date '+%Y%m%d-%H%M%S')"
 	date '+%Y%m%d-%H%M%S'
-
+	
 	return 0
 
 }
@@ -402,11 +437,18 @@ function main() {
 		die "$RC_MISSING_PREREQ" "A required dependency '$sampleCommand' is missing, cannot continue."
 	fi
 
-	# Example: Sample line for debug mode
+	# Example: Sample lines for debug mode
 	#trace 1
 	#export sampleVar="This is a sample variable"
 	#log "DEBUG" "Sample variable value: $sampleVar"
 	#trace 0
+
+	# Example: Sample lines for stacktrace
+	log "DEBUG" "Generating stacktrace..."
+	f3() { stacktrace; }
+	f2() { f3; }
+	f1() { f2; }
+	f1
 
 	# Example: Some log level examples
 	log "FATAL" "This is a fatal error, exiting..."

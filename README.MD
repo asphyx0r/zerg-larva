@@ -432,6 +432,40 @@ Notes:
 				 
 ------------------------------------------------------------------------------
 
+### stacktrace()
+
+------------------------------------------------------------------------------
+ **NAME**
+ 
+&emsp;&emsp;`stacktrace()` - Generate stack trace for debugging purpose
+
+ **SYNOPSIS**
+ 
+&emsp; &emsp;`stacktrace`
+
+ **DESCRIPTION**
+ 
+&emsp;&emsp;Display stack trace to STDOUT.\
+&emsp;&emsp;Show parent function, script name and line number.
+
+ **EXIT STATUS**
+ 
+&emsp;&emsp;0
+
+ **OUTPUT**
+ 
+ &emsp;&emsp;Formatted  stack trace:
+ ````
+        Stack trace:
+        ↳ f3 (zerg-larva.sh:448)
+          ↳ f2 (zerg-larva.sh:449)
+            ↳ f1 (zerg-larva.sh:450)
+              ↳ main (zerg-larva.sh:451)
+                ↳ main (zerg-larva.sh:484)
+ ````                
+				 
+------------------------------------------------------------------------------
+
 ### getTimestamp()
 
 ------------------------------------------------------------------------------
