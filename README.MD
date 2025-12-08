@@ -59,8 +59,6 @@ This section defines user-created functions. All business functions must be plac
 
 Note regarding user functions:
 
-* A function should always begin with the following identification line, allowing for its description during logging:
-&emsp;&emsp;`local functionName="custom_user_function()"`
 * A function should always return 0 on success;
 * A function should always return a number greater than 0 on error. This number must be a constant listed in the `Return Codes` section.
 * A fatal error encountered during execution should always trigger `exit()` or a `die()` call.
@@ -236,7 +234,9 @@ Notes:
 &emsp;&emsp;Displays the MESSAGE preceded by a timestamp and the LEVEL of the event.\
 &emsp;&emsp;The local variable `functionName` is also displayed if available and defined.\
 &emsp;&emsp;If not found, the default `undef()` function name is used.\
-&emsp;&emsp;Level can be (FATAL|ERROR|WARN|INFO|DEBUG)
+&emsp;&emsp;Level can be (FATAL|ERROR|WARN|INFO|DEBUG).\
+&emsp;&emsp;The name of the calling function is automatically retrieved from log() via the Bash variable FUNCNAME[1].\
+&emsp;&emsp;The line number where the log() function is called is recorded in the log message.
 
  **EXIT STATUS**
  
