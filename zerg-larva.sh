@@ -269,6 +269,8 @@ trace() {
 		return "$RC_INTERNAL_TRC_ARGS"
 	fi
 
+	echo "Line number: $LINENO"
+
 	if [[ "$1" -eq 1 ]]; then
 		set -x
 	else
