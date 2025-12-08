@@ -143,8 +143,8 @@ fi
 # errors:   $RC_INTERNAL_LOG_ARGS if not called with 2 arguments
 function log() {
 
-	# Used for logging/debugging purpose
-	# local functionName="log()"
+	# Get the caller function name, or 'main' if called from main script
+	local functionName="${FUNCNAME[1]:-main}"
 
 	# Arguments assignation
 	if [ "$#" -ne 2 ]; then
@@ -155,6 +155,8 @@ function log() {
 
 		local level="$1"
 		local message="$2"
+		# Get the line number where log() was called
+		local line="${BASH_LINENO[0]}"
 
 		# Check if the LEVEL is set to an allowed value
 		case "$1" in
@@ -166,7 +168,7 @@ function log() {
 			;;
 		esac
 
-		echo -e "[$level]\t$(date +'%Y-%m-%d %H:%M:%S') - $functionName: $message"
+		echo -e "[$level]\t$(date +'%Y-%m-%d %H:%M:%S') - $functionName($line): $message"
 
 		return 0
 
@@ -185,8 +187,6 @@ function log() {
 # errors:   Exits with the provided EXIT_CODE
 die() {
 
-	local functionName="die()"
-
 	local exit_code="$1"
 	shift
 	log "ERROR" "$@"
@@ -203,8 +203,6 @@ die() {
 # return:   0
 # errors:   None
 help() {
-
-	local functionName="help()"
 
 	cat <<-EOF
 		Usage: $scriptName [OPTION]
@@ -231,8 +229,6 @@ help() {
 # errors:   None
 list_exit_codes() {
 
-	local functionName="list_exit_codes()"
-
 	cat <<-EOF
 		RC=0 : Success / default (no error).
 		RC=1 : Missing operand (no arguments provided).
@@ -243,7 +239,7 @@ list_exit_codes() {
 		RC=6 : Internal error: checkdep() called with wrong number of arguments
 		RC=7 : Missing prerequisite (required command not found)
 		RC=8 : Internal error: trace() called with wrong number of arguments
-		RC=125 : Unknown error.
+		RC=125 : Unknown error
 	EOF
 
 	return 0
@@ -260,8 +256,6 @@ list_exit_codes() {
 # shellcheck disable=SC2329
 trace() {
 
-	local functionName="trace()"
-
 	# Arguments assignation
 	if [ "$#" -ne 1 ]; then
 		echo -e "\t$functionName: Error: 1 argument required. Usage: trace BOOLEAN"
@@ -269,7 +263,8 @@ trace() {
 		return "$RC_INTERNAL_TRC_ARGS"
 	fi
 
-	echo "Line number: $LINENO"
+	local line="${BASH_LINENO[0]}"
+	echo "Line number: $line"
 
 	if [[ "$1" -eq 1 ]]; then
 		set -x
@@ -290,9 +285,6 @@ trace() {
 # return:   True if the dependency is found, False otherwise
 # errors:   Exit with RC_INTERNAL_DEP_ARGS if called with wrong number of arguments (1 expected)
 function checkdep() {
-
-	# Used for logging/debugging purpose
-	local functionName="checkdep()"
 
 	# Arguments assignation
 	# Argument cannot be empty nor missing
@@ -330,9 +322,6 @@ function checkdep() {
 # errors:   None
 function dump() {
 
-	# Used for logging/debugging purpose
-	local functionName="dump()"
-
 	log "DEBUG" "Script name: $scriptName"
 	log "DEBUG" "Script path: $scriptPath"
 	log "DEBUG" "Script full path: $scriptFullPath"
@@ -355,9 +344,6 @@ function dump() {
 # errors:   None
 function getTimestamp() {
 
-	# Used for logging/debugging purpose
-	local functionName="getTimestamp()"
-
 	# echo "$(date '+%Y%m%d-%H%M%S')"
 	date '+%Y%m%d-%H%M%S'
 
@@ -368,9 +354,6 @@ function getTimestamp() {
 # -[ MAIN             ]---------------------------------------------------------
 # Go-go-go Gadgetomain!
 function main() {
-
-	# Used for logging/debugging purpose
-	local functionName="main()"
 
 	log "INFO" "$APPNAME $VERSION: Start"
 
