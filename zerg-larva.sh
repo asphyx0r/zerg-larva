@@ -316,10 +316,10 @@ function checkdep() {
 
 		if command -v "$commandCheck" >/dev/null 2>&1; then
 			log "DEBUG" "'$commandCheck' was found."
-			return 1
+			return 0
 		else
 			log "ERROR" "'$commandCheck' was not found."
-			return 0
+			return 1
 		fi
 
 	fi
@@ -398,7 +398,7 @@ function main() {
 
 	# Example: Sample lines for dependency check
 	export sampleCommand="bash"
-	if checkdep "$sampleCommand"; then
+	if ! checkdep "$sampleCommand"; then
 		die "$RC_MISSING_PREREQ" "A required dependency '$sampleCommand' is missing, cannot continue."
 	fi
 

@@ -380,7 +380,14 @@ Notes:
  
 &emsp;&emsp;6 `RC_INTERNAL_DEP_ARGS`: Wrong number of arguments.\
 &emsp;&emsp;Calling the function with a wrong number of arguments will `exit()`.\
-&emsp;&emsp;(Being unable to check dependencies is a fatal error)
+&emsp;&emsp;(Being unable to check dependencies is a fatal error)\
+&emsp;&emsp;Example:
+```bash
+	export sampleCommand="bash"
+	if ! checkdep "$sampleCommand"; then
+		die "$RC_MISSING_PREREQ" "A required dependency '$sampleCommand' is missing, cannot continue."
+	fi
+```
 
  **OUTPUT**
  
