@@ -582,6 +582,17 @@ Usage: zerg-larva.sh [OPTION]
 
 # Changelog
 
+### v1.0.9 - Improved debugging functions (2025-12-08)
+* 82f56b7 2025-12-08 CHANGELOG.md Update
+* f431d73 2025-12-08 Added stacktrace() function
+* f6a26a8 2025-12-08 Fixed the reversal of return codes in checkdep()
+* 785377c 2025-12-08 log(): Being unable to log is not a fatal error
+* 934c012 2025-12-08 dump() function improvements
+* fc448cb 2025-12-08 Updated README: new behavior of the log() function
+* 2fa629d 2025-12-08 Log() function improvement
+* 6313428 2025-12-08 Added line number tracking in trace() function
+* f80fc25 2025-12-07 Documentation improvement
+
 ### v1.0.8 - Documentation improvement (2025-12-07)
 * 0f35450 2025-12-07 Documentation improvement
 * da96409 2025-12-07 Fixed typo in main() comment

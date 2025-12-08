@@ -1,4 +1,17 @@
 
+## v1.0.9
+References | Description | Author(s)
+--- | --- | ---
+82f56b7 | CHANGELOG.md Update | asphyx
+f431d73 | Added stacktrace() function | asphyx
+f6a26a8 | Fixed the reversal of return codes in checkdep() | asphyx
+785377c | log(): Being unable to log is not a fatal error | asphyx
+934c012 | dump() function improvements | asphyx
+fc448cb | Updated README: new behavior of the log() function | asphyx
+2fa629d | Log() function improvement | asphyx
+6313428 | Added line number tracking in trace() function | asphyx
+f80fc25 | Documentation improvement | asphyx
+
 ## v1.0.8
 References | Description | Author(s)
 --- | --- | ---
@@ -66,4 +79,4 @@ References | Description | Author(s)
 --- | --- | ---
 3bf9436 | Repo init: first commit | asphyx
 
-Updated: 2025-12-07 13:54:21
+Updated: 2025-12-08 11:41:03
