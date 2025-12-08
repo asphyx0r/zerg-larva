@@ -57,10 +57,22 @@ readonly RC_UNKNOWN=125
 # Default system variables, I will use it later. DO NOT MODIFY.
 RC=$RC_OK
 functionName="undef()"
+readonly scriptPID="$$"
+readonly scriptPPID="$PPID"
 readonly scriptName="${0##*/}"
 readonly scriptPath="${0%/*}"
-readonly scriptFullPath="${0}"
-scriptArgs=("$@")
+readonly scriptArgs=("$@")
+scriptFullPath="$(readlink -f "$0" 2>/dev/null || echo "$0")"
+readonly scriptFullPath
+scriptDir=""
+scriptDir="$(dirname "$scriptFullPath")"
+readonly scriptDir
+scriptStartDate=""
+scriptStartDate="$(date +'%Y-%m-%d %H:%M:%S')"
+readonly scriptStartDate
+scriptStartTime=""
+scriptStartTime="$(date +%s)"
+readonly scriptStartTime
 
 # -[ ARGUMENTS        ]---------------------------------------------------------
 # Arguments assignment, CLI/POSIX flavour
@@ -322,11 +334,23 @@ function checkdep() {
 # errors:   None
 function dump() {
 
+	log "DEBUG" "Script start date: $scriptStartDate"
+	log "DEBUG" "Script start time (epoch): $scriptStartTime"
+
+	log "DEBUG" "Shell PID: $scriptPID"
+	log "DEBUG" "Shell PPID: $scriptPPID"
+
+	log "DEBUG" "Script full path: $scriptFullPath"
+	log "DEBUG" "Script directory: $scriptDir"
 	log "DEBUG" "Script name: $scriptName"
 	log "DEBUG" "Script path: $scriptPath"
-	log "DEBUG" "Script full path: $scriptFullPath"
+	
 	# Properly display all array elements: https://www.shellcheck.net/wiki/SC2128
 	log "DEBUG" "Script arguments: ${scriptArgs[*]}"
+
+	log "DEBUG" "User name: $USER"
+	log "DEBUG" "Host name: $HOSTNAME"
+	log "DEBUG" "Bash version: $BASH_VERSION"
 
 	return 0
 

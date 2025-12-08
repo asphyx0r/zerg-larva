@@ -401,7 +401,7 @@ Notes:
 
  **DESCRIPTION**
  
-&emsp;&emsp;Print debug information about the script (name, path, full path, arguments).\
+&emsp;&emsp;Print debug information about the script (name, path, full path, arguments, system variables).\
 &emsp;&emsp;The `log()` function is used to output the system variables.
 
  **EXIT STATUS**
@@ -410,10 +410,18 @@ Notes:
 
  **OUTPUT**
  
- &emsp;&emsp;`script name`\
-  &emsp;&emsp;`script path`\
-  &emsp;&emsp;`script full path`\
-  &emsp;&emsp;`arguments`
+&emsp;&emsp;`script start date`\
+&emsp;&emsp;`script start time`\
+&emsp;&emsp;`script PID`\
+&emsp;&emsp;`script PPID`\
+&emsp;&emsp;`script full path`\
+&emsp;&emsp;`script directory`\
+&emsp;&emsp;`script name`\
+&emsp;&emsp;`script path`\
+&emsp;&emsp;`arguments`\
+&emsp;&emsp;`user`\
+&emsp;&emsp;`hostname`\
+&emsp;&emsp;`bash version`
 				 
 ------------------------------------------------------------------------------
 
