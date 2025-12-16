@@ -204,6 +204,7 @@ die() {
 	local exit_code="$1"
 	shift
 	log "ERROR" "$@"
+	RC=$exit_code
 	exit "$exit_code"
 
 }
