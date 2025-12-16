@@ -10,6 +10,7 @@
 .cache/
 Thumbs.db
 ehthumbs.db
+.vscode/
 
 # Logs
 *.log
