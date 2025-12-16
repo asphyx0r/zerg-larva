@@ -51,6 +51,7 @@ readonly RC_INVALID_DIRECTORY=5
 readonly RC_INTERNAL_DEP_ARGS=6
 readonly RC_MISSING_PREREQ=7
 readonly RC_INTERNAL_TRC_ARGS=8
+# shellcheck disable=SC2034  # Unused variables left for readability
 readonly RC_UNKNOWN=125
 
 # -[ INTERNAL GLOBALS ]---------------------------------------------------------
