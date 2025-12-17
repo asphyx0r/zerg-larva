@@ -49,7 +49,7 @@ The `--directory` argument shows how to capture a string and use it as the targe
 
 ### Functions
 
-This section defines the default functions made available by the script: `log()`, `die()`, `help()`, `list_exit_codes()`, `trace()`, `checkdep()`, and `dump()`.
+This section defines the default functions made available by the script: `z_log()`, `z_die()`, `z_help()`, `z_list_exit_codes()`, `z_trace()`, `z_checkdep()`, and `z_dump()`.
 
 The content of this section must not be modified.
 
@@ -61,7 +61,7 @@ Note regarding user functions:
 
 * A function should always return 0 on success;
 * A function should always return a number greater than 0 on error. This number must be a constant listed in the `Return Codes` section.
-* A fatal error encountered during execution should always trigger `exit()` or a `die()` call.
+* A fatal error encountered during execution should always trigger `exit()` or a `z_die()` call.
 
 ### Main
 
@@ -218,16 +218,16 @@ Notes:
 
 ## Built-in Functions
 
-### log(level, message)
+### z_log(level, message)
 
 ------------------------------------------------------------------------------
  **NAME**
  
-&emsp;&emsp;`log()` - Print a log line
+&emsp;&emsp;`z_log()` - Print a log line
 
  **SYNOPSIS**
 
-&emsp; &emsp;`log <LEVEL> <MESSAGE>`
+&emsp; &emsp;`z_log <LEVEL> <MESSAGE>`
 
  **DESCRIPTION**
  
@@ -248,16 +248,16 @@ Notes:
  
 ------------------------------------------------------------------------------
 
-### help()
+### z_help()
 
 ------------------------------------------------------------------------------
  **NAME**
  
-&emsp;&emsp;`help()` - Display help and script usage information
+&emsp;&emsp;`z_help()` - Display help and script usage information
 
  **SYNOPSIS**
  
-&emsp; &emsp;`help`
+&emsp; &emsp;`z_help`
 
  **DESCRIPTION**
  
@@ -276,16 +276,16 @@ Notes:
  
 ------------------------------------------------------------------------------
 
-### list_exit_codes()
+### z_list_exit_codes()
 
 ------------------------------------------------------------------------------
  **NAME**
  
-&emsp;&emsp;`list_exit_codes()` - Display script exit codes information
+&emsp;&emsp;`z_list_exit_codes()` - Display script exit codes information
 
  **SYNOPSIS**
  
-&emsp; &emsp;`list_exit_codes`
+&emsp; &emsp;`z_list_exit_codes`
 
  **DESCRIPTION**
  
@@ -304,26 +304,26 @@ Notes:
  
 ------------------------------------------------------------------------------
 
-### trace()
+### z_trace()
 
 ------------------------------------------------------------------------------
  **NAME**
  
-&emsp;&emsp;`trace()` - Enable '`set -x`' tracing for debugging purpose
+&emsp;&emsp;`z_trace()` - Enable '`set -x`' tracing for debugging purpose
 
  **SYNOPSIS**
  
-&emsp;&emsp;`trace BOOLEAN`\
+&emsp;&emsp;`z_trace BOOLEAN`\
 &emsp;&emsp;0 : Disable tracing\
 &emsp;&emsp;1 : Enable tracing
 
  **DESCRIPTION**
  
 &emsp;&emsp;Enable '`set -x`' for local debugging.\
-&emsp;&emsp;Your tracked code block should be enclosed between two `trace`calls:\
-&emsp;&emsp;&emsp;&emsp;`trace 1`\
+&emsp;&emsp;Your tracked code block should be enclosed between two `z_trace`calls:\
+&emsp;&emsp;&emsp;&emsp;`z_trace 1`\
 &emsp;&emsp;&emsp;&emsp;`<...>`\
-&emsp;&emsp;&emsp;&emsp;`trace 0`
+&emsp;&emsp;&emsp;&emsp;`z_trace 0`
 
  **EXIT STATUS**
  
@@ -336,12 +336,12 @@ Notes:
  
 ------------------------------------------------------------------------------
 
-### die(exit_code, message)
+### z_die(exit_code, message)
 
 ------------------------------------------------------------------------------
  **NAME**
  
-&emsp;&emsp;`die()` - Display error message then exit with return code
+&emsp;&emsp;`z_die()` - Display error message then exit with return code
 
  **SYNOPSIS**
  
@@ -362,16 +362,16 @@ Notes:
  
 ------------------------------------------------------------------------------
 
-### checkdep(command)
+### z_checkdep(command)
 
 ------------------------------------------------------------------------------
  **NAME**
  
-&emsp;&emsp;`checkdep()` - Verify if required command is available.
+&emsp;&emsp;`z_checkdep()` - Verify if required command is available.
 
  **SYNOPSIS**
  
-&emsp; &emsp;`checkdep <COMMAND>`
+&emsp; &emsp;`z_checkdep <COMMAND>`
 
  **DESCRIPTION**
  
@@ -386,8 +386,8 @@ Notes:
 &emsp;&emsp;Example:
 ```bash
 	export sampleCommand="bash"
-	if ! checkdep "$sampleCommand"; then
-		die "$RC_MISSING_PREREQ" "A required dependency '$sampleCommand' is missing, cannot continue."
+	if ! z_checkdep "$sampleCommand"; then
+		z_die "$RC_MISSING_PREREQ" "A required dependency '$sampleCommand' is missing, cannot continue."
 	fi
 ```
 
@@ -397,12 +397,12 @@ Notes:
  
 ------------------------------------------------------------------------------
 
-### dump()
+### z_dump()
 
 ------------------------------------------------------------------------------
  **NAME**
  
-&emsp;&emsp;`dump()` - Print debug information
+&emsp;&emsp;`z_dump()` - Print debug information
 
  **SYNOPSIS**
  
@@ -434,12 +434,12 @@ Notes:
 				 
 ------------------------------------------------------------------------------
 
-### stacktrace()
+### z_stacktrace()
 
 ------------------------------------------------------------------------------
  **NAME**
  
-&emsp;&emsp;`stacktrace()` - Generate stack trace for debugging purpose
+&emsp;&emsp;`z_stacktrace()` - Generate stack trace for debugging purpose
 
  **SYNOPSIS**
  
@@ -549,7 +549,7 @@ This script requires the following external programs and shell features:
 - **bash(1)**
   - Used as the script interpreter (shebang `#!/usr/bin/env bash`). The script uses Bash-specific features such as `[[ ... ]]`, `local`, and `function`.
 - **date(1)**
-  - Used to generate timestamps in `log()` and `get_timestamp()` (format strings via `+FORMAT`).
+  - Used to generate timestamps in `z_log()` and `get_timestamp()` (format strings via `+FORMAT`).
 
 ### Shell features (provided by Bash)
 
@@ -570,7 +570,7 @@ This script requires the following external programs and shell features:
 # Usage
 
 This script is provided by these default command line options.
-Modify the content of the `help()` function to fit your needs:
+Modify the content of the `z_help()` function to fit your needs:
 
 ```text
 Usage: zerg-larva.sh [OPTION]

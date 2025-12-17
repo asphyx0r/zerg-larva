@@ -145,16 +145,16 @@ fi
 
 # -[ FUNCTIONS        ]---------------------------------------------------------
 
-# name:     log()
+# name:     z_log()
 # summary:  Easy logging
-# usage:    log <LEVEL> <MESSAGE>
-# example:  log "INFO" "This is an informational message."
+# usage:    z_log <LEVEL> <MESSAGE>
+# example:  z_log "INFO" "This is an informational message."
 # input:    $1: LEVEL (FATAL, ERROR, WARN, INFO, DEBUG)
 #           $2: Log message
 # output:   String to STDOUT
 # return:   0 in case of success
 # errors:   $RC_INTERNAL_LOG_ARGS if not called with 2 arguments
-function log() {
+function z_log() {
 
 	# Get the caller function name, or 'main' if called from main script
 	local functionName="${FUNCNAME[1]:-main}"
@@ -191,34 +191,34 @@ function log() {
 
 }
 
-# name:     die()
+# name:     z_die()
 # summary:  Display error message then exit with return code
-# usage:    die <EXIT_CODE> <MESSAGE>
-# example:  die 1 "This is a fatal error."
+# usage:    z_die <EXIT_CODE> <MESSAGE>
+# example:  z_die 1 "This is a fatal error."
 # input:    $1: EXIT_CODE (integer)
 #           $2: Error message (string)
 # output:   String to STDOUT (error message)
 # return:   None
 # errors:   Exits with the provided EXIT_CODE
-die() {
+function z_die() {
 
 	local exit_code="$1"
 	shift
-	log "ERROR" "$@"
+	z_log "ERROR" "$@"
 	RC=$exit_code
 	exit "$exit_code"
 
 }
 
-# name:     help()
+# name:     z_help()
 # summary:  Display help and script usage information
-# usage:    help
-# example:  help
+# usage:    z_help
+# example:  z_help
 # input:    None
 # output:   String to STDOUT (script usage)
 # return:   0
 # errors:   None
-help() {
+function z_help() {
 
 	cat <<-EOF
 		Usage: $scriptName [OPTION]
@@ -235,15 +235,15 @@ help() {
 	return 0
 }
 
-# name:     list_exit_codes()
+# name:     z_list_exit_codes()
 # summary:  Display script exit codes information
-# usage:    list_exit_codes
-# example:  list_exit_codes
+# usage:    z_list_exit_codes
+# example:  z_list_exit_codes
 # input:    None
 # output:   String to STDOUT (RC list)
 # return:   0
 # errors:   None
-list_exit_codes() {
+function z_list_exit_codes() {
 
 	cat <<-EOF
 		RC=0 : Success / default (no error).
@@ -261,16 +261,16 @@ list_exit_codes() {
 	return 0
 }
 
-# name:     trace()
+# name:     z_trace()
 # summary:  Enable 'set -x' tracing for debugging purpose
-# usage:    trace BOOLEAN
-# example:  trace 1
+# usage:    z_trace BOOLEAN
+# example:  z_trace 1
 # input:    $1: 1 or 0 (enable/disable tracing)
 # output:   Debugging information to STDERR
 # return:   0 on success
 # errors:   RC_INTERNAL_TRC_ARGS if called with wrong number of arguments (1 expected)
 # shellcheck disable=SC2329
-trace() {
+function z_trace() {
 
 	# Arguments assignation
 	if [ "$#" -ne 1 ]; then
@@ -292,20 +292,20 @@ trace() {
 
 }
 
-# name:     checkdep()
+# name:     z_checkdep()
 # summary:  Check dependencies. Verify if required command is available.
-# usage:    checkdep <DEPENDENCY>
-# example:  checkdep "curl"
+# usage:    z_checkdep <DEPENDENCY>
+# example:  z_checkdep "curl"
 # input:    $1: DEPENDENCY (string, command to check)
 # output:   Check result to STDOUT (via log function)
 # return:   True if the dependency is found, False otherwise
 # errors:   Exit with RC_INTERNAL_DEP_ARGS if called with wrong number of arguments (1 expected)
-function checkdep() {
+function z_checkdep() {
 
 	# Arguments assignation
 	# Argument cannot be empty nor missing
 	if [[ -z ${1:-} ]]; then
-		log "ERROR" "Missing argument DEPENDENCY. Usage: checkdep \"DEPENDENCY\""
+		z_log "ERROR" "Missing argument DEPENDENCY. Usage: z_checkdep \"DEPENDENCY\""
 		RC=$RC_INTERNAL_DEP_ARGS
 		# Being unable to check dependencies is a fatal error
 		exit "$RC"
@@ -314,13 +314,13 @@ function checkdep() {
 
 		local commandCheck="$1"
 
-		log "DEBUG" "Checking prerequisites..."
+		z_log "DEBUG" "Checking prerequisites..."
 
 		if command -v "$commandCheck" >/dev/null 2>&1; then
-			log "DEBUG" "'$commandCheck' was found."
+			z_log "DEBUG" "'$commandCheck' was found."
 			return 0
 		else
-			log "ERROR" "'$commandCheck' was not found."
+			z_log "ERROR" "'$commandCheck' was not found."
 			return 1
 		fi
 
@@ -328,47 +328,47 @@ function checkdep() {
 
 }
 
-# name:     dump()
+# name:     z_dump()
 # summary:  Dump script informations for debug purpose
-# usage:    dump
-# example:  dump
+# usage:    z_dump
+# example:  z_dump
 # input:    None
 # output:   String to STDOUT
 # return:   0
 # errors:   None
-function dump() {
+function z_dump() {
 
-	log "DEBUG" "Script start date: $scriptStartDate"
-	log "DEBUG" "Script start time (epoch): $scriptStartTime"
+	z_log "DEBUG" "Script start date: $scriptStartDate"
+	z_log "DEBUG" "Script start time (epoch): $scriptStartTime"
 
-	log "DEBUG" "Shell PID: $scriptPID"
-	log "DEBUG" "Shell PPID: $scriptPPID"
+	z_log "DEBUG" "Shell PID: $scriptPID"
+	z_log "DEBUG" "Shell PPID: $scriptPPID"
 
-	log "DEBUG" "Script full path: $scriptFullPath"
-	log "DEBUG" "Script directory: $scriptDir"
-	log "DEBUG" "Script name: $scriptName"
-	log "DEBUG" "Script path: $scriptPath"
+	z_log "DEBUG" "Script full path: $scriptFullPath"
+	z_log "DEBUG" "Script directory: $scriptDir"
+	z_log "DEBUG" "Script name: $scriptName"
+	z_log "DEBUG" "Script path: $scriptPath"
 
 	# Properly display all array elements: https://www.shellcheck.net/wiki/SC2128
-	log "DEBUG" "Script arguments: ${scriptArgs[*]}"
+	z_log "DEBUG" "Script arguments: ${scriptArgs[*]}"
 
-	log "DEBUG" "User name: $USER"
-	log "DEBUG" "Host name: $HOSTNAME"
-	log "DEBUG" "Bash version: $BASH_VERSION"
+	z_log "DEBUG" "User name: $USER"
+	z_log "DEBUG" "Host name: $HOSTNAME"
+	z_log "DEBUG" "Bash version: $BASH_VERSION"
 
 	return 0
 
 }
 
-# name:     stacktrace()
+# name:     z_stacktrace()
 # summary:  Generate stack trace for debugging purpose
-# usage:    stacktrace
-# example:  stacktrace
+# usage:    z_stacktrace
+# example:  z_stacktrace
 # input:    None
 # output:   Display stack trace to STDOUT
 # return:   0
 # errors:   None
-stacktrace() {
+function z_stacktrace() {
 
 	local depth="${#FUNCNAME[@]}"
 	local i
@@ -418,47 +418,47 @@ function get_timestamp() {
 # Go-go-go Gadgetomain!
 function main() {
 
-	log "INFO" "$APPNAME $VERSION: Start"
+	z_log "INFO" "$APPNAME $VERSION: Start"
 
 	# Insert your main code below this line
 
 	# Example: Sample line for the verbose flag
 	if [[ "$argVerbose" == true ]]; then
-		dump
+		z_dump
 	fi
 
 	# Example: Sample line for function output
-	log "INFO" "$(get_timestamp)"
+	z_log "INFO" "$(get_timestamp)"
 
 	# Example: Sample line for directory argument
-	log "INFO" "Target directory is: $argDirectory"
+	z_log "INFO" "Target directory is: $argDirectory"
 
 	# Example: Sample lines for dependency check
 	export sampleCommand="bash"
-	if ! checkdep "$sampleCommand"; then
-		die "$RC_MISSING_PREREQ" "A required dependency '$sampleCommand' is missing, cannot continue."
+	if ! z_checkdep "$sampleCommand"; then
+		z_die "$RC_MISSING_PREREQ" "A required dependency '$sampleCommand' is missing, cannot continue."
 	fi
 
 	# Example: Sample lines for debug mode
-	#trace 1
+	#z_trace 1
 	#export sampleVar="This is a sample variable"
-	#log "DEBUG" "Sample variable value: $sampleVar"
-	#trace 0
+	#z_log "DEBUG" "Sample variable value: $sampleVar"
+	#z_trace 0
 
 	# Example: Sample lines for stacktrace
-	log "DEBUG" "Generating stacktrace..."
-	f3() { stacktrace; }
+	z_log "DEBUG" "Generating stacktrace..."
+	f3() { z_stacktrace; }
 	f2() { f3; }
 	f1() { f2; }
 	f1
 
 	# Example: Some log level examples
-	log "FATAL" "This is a fatal error, exiting..."
-	log "ERROR" "Unable to connect the database"
-	log "WARN" "Configuration file missing, using default values"
-	log "INFO" "Successfully connected to the database"
-	log "DEBUG" "Information for debugging purpose only"
-	log "WRONG" "This value is not allowed, I don't trust you"
+	z_log "FATAL" "This is a fatal error, exiting..."
+	z_log "ERROR" "Unable to connect the database"
+	z_log "WARN" "Configuration file missing, using default values"
+	z_log "INFO" "Successfully connected to the database"
+	z_log "DEBUG" "Information for debugging purpose only"
+	z_log "WRONG" "This value is not allowed, I don't trust you"
 
 	# Example: set RC to non-zero if a simulated error occurs
 	# Uncomment the next line to simulate an error exit
@@ -466,7 +466,7 @@ function main() {
 
 	# Insert your main code above this line
 
-	log "INFO" "$APPNAME $VERSION: End ($RC)"
+	z_log "INFO" "$APPNAME $VERSION: End ($RC)"
 	return "$RC"
 }
 
@@ -474,13 +474,13 @@ function main() {
 # Here is the core: Display help, version or run main()
 # Do not modify this part unless you know what you are doing
 if [[ "$argHelp" == true ]]; then
-	help
+	z_help
 	exit 0
 elif [[ "$argVersion" == true ]]; then
 	echo "$APPNAME $VERSION"
 	exit 0
 elif [[ "$argListExitCodes" == true ]]; then
-	list_exit_codes
+	z_list_exit_codes
 	exit 0
 else
 	main
