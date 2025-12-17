@@ -348,7 +348,7 @@ function dump() {
 	log "DEBUG" "Script directory: $scriptDir"
 	log "DEBUG" "Script name: $scriptName"
 	log "DEBUG" "Script path: $scriptPath"
-	
+
 	# Properly display all array elements: https://www.shellcheck.net/wiki/SC2128
 	log "DEBUG" "Script arguments: ${scriptArgs[*]}"
 
@@ -370,46 +370,46 @@ function dump() {
 # errors:   None
 stacktrace() {
 
-    local depth="${#FUNCNAME[@]}"
-    local i
+	local depth="${#FUNCNAME[@]}"
+	local i
 
-    printf "\tStack trace:\n"
+	printf "\tStack trace:\n"
 
-    # stacktrace starts at 1 to skip the current function (stacktrace)
-    for (( i=1; i<depth; i++ )); do
+	# stacktrace starts at 1 to skip the current function (stacktrace)
+	for ((i = 1; i < depth; i++)); do
 
-        local func="${FUNCNAME[$i]}"
-        local file="${BASH_SOURCE[$i]##*/}"
-        local line="${BASH_LINENO[$((i-1))]}"
+		local func="${FUNCNAME[$i]}"
+		local file="${BASH_SOURCE[$i]##*/}"
+		local line="${BASH_LINENO[$((i - 1))]}"
 
-        # Identation based on stack depth
-        local indent=""
-        for (( n=1; n<i; n++ )); do
-            indent+="  "
-        done
+		# Identation based on stack depth
+		local indent=""
+		for ((n = 1; n < i; n++)); do
+			indent+="  "
+		done
 
-        printf '\t%s↳ %s (%s:%s)\n' "$indent" "$func" "$file" "$line"
+		printf '\t%s↳ %s (%s:%s)\n' "$indent" "$func" "$file" "$line"
 
-    done
+	done
 
 	return 0
 }
 
 # -[ USER FUNCTIONS   ]---------------------------------------------------------
 
-# name:     getTimestamp()
+# name:     get_timestamp()
 # summary:  Some default function template/skeleton
-# usage:    getTimestamp
-# example:  getTimestamp
+# usage:    get_timestamp
+# example:  get_timestamp
 # input:    None
 # output:   String to STDOUT
 # return:   0
 # errors:   None
-function getTimestamp() {
+function get_timestamp() {
 
 	# echo "$(date '+%Y%m%d-%H%M%S')"
 	date '+%Y%m%d-%H%M%S'
-	
+
 	return 0
 
 }
@@ -428,7 +428,7 @@ function main() {
 	fi
 
 	# Example: Sample line for function output
-	log "INFO" "$(getTimestamp)"
+	log "INFO" "$(get_timestamp)"
 
 	# Example: Sample line for directory argument
 	log "INFO" "Target directory is: $argDirectory"

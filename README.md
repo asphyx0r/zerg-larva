@@ -55,7 +55,7 @@ The content of this section must not be modified.
 
 ### User Functions
 
-This section defines user-created functions. All business functions must be placed here. The `getTimestamp()` function is a placeholder used as an example.
+This section defines user-created functions. All business functions must be placed here. The `get_timestamp()` function is a placeholder used as an example.
 
 Note regarding user functions:
 
@@ -468,16 +468,16 @@ Notes:
 				 
 ------------------------------------------------------------------------------
 
-### getTimestamp()
+### get_timestamp()
 
 ------------------------------------------------------------------------------
  **NAME**
  
-&emsp;&emsp;`getTimestamp()` - Return a timestamp string
+&emsp;&emsp;`get_timestamp()` - Return a timestamp string
 
  **SYNOPSIS**
  
-&emsp; &emsp;`getTimestamp`
+&emsp; &emsp;`get_timestamp`
 
  **DESCRIPTION**
  
@@ -549,7 +549,7 @@ This script requires the following external programs and shell features:
 - **bash(1)**
   - Used as the script interpreter (shebang `#!/usr/bin/env bash`). The script uses Bash-specific features such as `[[ ... ]]`, `local`, and `function`.
 - **date(1)**
-  - Used to generate timestamps in `log()` and `getTimestamp()` (format strings via `+FORMAT`).
+  - Used to generate timestamps in `log()` and `get_timestamp()` (format strings via `+FORMAT`).
 
 ### Shell features (provided by Bash)
 
@@ -609,7 +609,7 @@ Usage: zerg-larva.sh [OPTION]
 
 ### v1.0.6 - 'man' section style documentation (2025-12-06)
 * 930a638 2025-12-06 Added man section for main() function
-* cd059ad 2025-12-06 Added man section for getTimestamp() function
+* cd059ad 2025-12-06 Added man section for get_timestamp() function
 * 2c72c41 2025-12-06 Added man section for dump() function
 * e71dd2a 2025-12-06 Added man section for log() function
 * 50b3b37 2025-12-06 Adding Bash docstrings to functions
