@@ -584,6 +584,19 @@ Usage: zerg-larva.sh [OPTION]
 
 # Changelog
 
+### v1.0.10 - Internal functions rework (2025-12-18)
+* 4cb59da 2025-12-18 Added FILE_ID.DIZ for BBS distribution
+* 6cad6f0 2025-12-18 Added ZERG.NFO file to project root
+* 9c7e83c 2025-12-17 Internal functions renamed with "z_" prefix
+* 6c67c2f 2025-12-17 getTimestamp() renamed to get_timestamp()
+* 3a4f047 2025-12-17 Added .vscode to .gitignore
+* 50f036b 2025-12-16 Updated .gitignore to include TODO.md
+* 200b12b 2025-12-16 Fixed missing section separator in README.md/trace
+* 3c3e2b9 2025-12-16 Shellcheck disabled for inused RC_UNKNOWN
+* 488f3d9 2025-12-16 Renamed README.MD to README.md for consistency
+* 41ccb95 2025-12-16 Global variable $RC set to EXIT CODE in die()
+* 05d54fb 2025-12-08 CHANGELOG.md Update
+
 ### v1.0.9 - Improved debugging functions (2025-12-08)
 * 82f56b7 2025-12-08 CHANGELOG.md Update
 * f431d73 2025-12-08 Added stacktrace() function

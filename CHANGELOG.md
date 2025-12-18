@@ -1,4 +1,19 @@
 
+## v1.0.10
+References | Description | Author(s)
+--- | --- | ---
+4cb59da | Added FILE_ID.DIZ for BBS distribution | asphyx
+6cad6f0 | Added ZERG.NFO file to project root | asphyx
+9c7e83c | Internal functions renamed with "z_" prefix | asphyx
+6c67c2f | getTimestamp() renamed to get_timestamp() | asphyx
+3a4f047 | Added .vscode to .gitignore | asphyx
+50f036b | Updated .gitignore to include TODO.md | asphyx
+200b12b | Fixed missing section separator in README.md/trace | asphyx
+3c3e2b9 | Shellcheck disabled for inused RC_UNKNOWN | asphyx
+488f3d9 | Renamed README.MD to README.md for consistency | asphyx
+41ccb95 | Global variable $RC set to EXIT CODE in die() | asphyx
+05d54fb | CHANGELOG.md Update | asphyx
+
 ## v1.0.9
 References | Description | Author(s)
 --- | --- | ---
@@ -79,4 +94,4 @@ References | Description | Author(s)
 --- | --- | ---
 3bf9436 | Repo init: first commit | asphyx
 
-Updated: 2025-12-08 11:41:03
+Updated: 2025-12-18 11:33:21
