@@ -2,7 +2,9 @@
 ## v1.0.10
 References | Description | Author(s)
 --- | --- | ---
-4cb59da | Added FILE_ID.DIZ for BBS distribution | asphyx
+1b8c5a3 | Fixed wrong function names in documentation | asphyx
+01e843d | Updated FILE_ID.DIZ with tag number v1.0.10 | asphyx
+edebbc1 | Added FILE_ID.DIZ for BBS distribution | asphyx
 6cad6f0 | Added ZERG.NFO file to project root | asphyx
 9c7e83c | Internal functions renamed with "z_" prefix | asphyx
 6c67c2f | getTimestamp() renamed to get_timestamp() | asphyx
@@ -94,4 +96,4 @@ References | Description | Author(s)
 --- | --- | ---
 3bf9436 | Repo init: first commit | asphyx
 
-Updated: 2025-12-18 11:33:21
+Updated: 2025-12-18 12:07:11

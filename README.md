@@ -345,7 +345,7 @@ Notes:
 
  **SYNOPSIS**
  
-&emsp; &emsp;`die <EXIT_CODE> <MESSAGE>`
+&emsp; &emsp;`z_die <EXIT_CODE> <MESSAGE>`
 
  **DESCRIPTION**
 
@@ -393,7 +393,7 @@ Notes:
 
  **OUTPUT**
  
- &emsp;&emsp;Search result as DEBUG message (using `log` function)
+ &emsp;&emsp;Search result as DEBUG message (using `z_log` function)
  
 ------------------------------------------------------------------------------
 
@@ -406,12 +406,12 @@ Notes:
 
  **SYNOPSIS**
  
-&emsp; &emsp;`dump`
+&emsp; &emsp;`z_dump`
 
  **DESCRIPTION**
  
 &emsp;&emsp;Print debug information about the script (name, path, full path, arguments, system variables).\
-&emsp;&emsp;The `log()` function is used to output the system variables.
+&emsp;&emsp;The `z_log()` function is used to output the system variables.
 
  **EXIT STATUS**
  
@@ -443,7 +443,7 @@ Notes:
 
  **SYNOPSIS**
  
-&emsp; &emsp;`stacktrace`
+&emsp; &emsp;`z_stacktrace`
 
  **DESCRIPTION**
  
@@ -532,12 +532,12 @@ This codes can be changed, or new one can be added. The free range is **0–125*
 - 0 — Success / default (no error)
 - 1 — Missing operand (no arguments provided)
 - 2 — Unknown operand (invalid option passed)
-- 3 — Internal error: `log()` called with wrong number of arguments
+- 3 — Internal error: `z_log()` called with wrong number of arguments
 - 4 — Missing DIRECTORY for `-d|--directory` option (directory argument not provided or invalid)
 - 5 — Provided DIRECTORY does not exist or is not accessible
-- 6 — Internal error: `checkdep()` called with wrong number of arguments
+- 6 — Internal error: `z_checkdep()` called with wrong number of arguments
 - 7 — Missing prerequisite (required command not found)
-- 8 — Internal error: `trace()` called with wrong number of arguments
+- 8 — Internal error: `z_trace()` called with wrong number of arguments
 - 125 — Unknown error
 
 ## Dependencies
@@ -585,7 +585,9 @@ Usage: zerg-larva.sh [OPTION]
 # Changelog
 
 ### v1.0.10 - Internal functions rework (2025-12-18)
-* 4cb59da 2025-12-18 Added FILE_ID.DIZ for BBS distribution
+* 1b8c5a3 2025-12-18 Fixed wrong function names in documentation
+* 01e843d 2025-12-18 Updated FILE_ID.DIZ with tag number v1.0.10
+* edebbc1 2025-12-18 Added FILE_ID.DIZ for BBS distribution
 * 6cad6f0 2025-12-18 Added ZERG.NFO file to project root
 * 9c7e83c 2025-12-17 Internal functions renamed with "z_" prefix
 * 6c67c2f 2025-12-17 getTimestamp() renamed to get_timestamp()
