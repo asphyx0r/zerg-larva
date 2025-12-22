@@ -59,36 +59,36 @@ readonly RC_UNKNOWN=125
 # -[ INTERNAL GLOBALS ]---------------------------------------------------------
 # Default system variables, I will use it later. DO NOT MODIFY.
 RC=$RC_OK
-functionName="undef()"
-readonly scriptPID="$$"
-readonly scriptPPID="$PPID"
-readonly scriptName="${0##*/}"
-readonly scriptPath="${0%/*}"
-readonly scriptArgs=("$@")
-scriptFullPath="$(readlink -f "$0" 2>/dev/null || echo "$0")"
-readonly scriptFullPath
-scriptDir=""
-scriptDir="$(dirname "$scriptFullPath")"
-readonly scriptDir
-scriptStartDate=""
-scriptStartDate="$(date +'%Y-%m-%d %H:%M:%S')"
-readonly scriptStartDate
-scriptStartTime=""
-scriptStartTime="$(date +%s)"
-readonly scriptStartTime
+function_name="undef()"
+readonly script_pid="$$"
+readonly script_ppid="$PPID"
+readonly script_name="${0##*/}"
+readonly script_path="${0%/*}"
+readonly script_args=("$@")
+script_full_path="$(readlink -f "$0" 2>/dev/null || echo "$0")"
+readonly script_full_path
+script_dir=""
+script_dir="$(dirname "$script_full_path")"
+readonly script_dir
+script_start_date=""
+script_start_date="$(date +'%Y-%m-%d %H:%M:%S')"
+readonly script_start_date
+script_start_time=""
+script_start_time="$(date +%s)"
+readonly script_start_time
 
 # -[ ARGUMENTS        ]---------------------------------------------------------
 # Arguments assignment, CLI/POSIX flavour
-argHelp=false
-argVersion=false
-argVerbose=false
-argListExitCodes=false
-argDirectory=""
+arg_help=false
+arg_version=false
+arg_verbose=false
+arg_list_exit_codes=false
+arg_directory=""
 
 # I need at least one argument
 if [ "$#" -eq 0 ]; then
 	echo "Missing operand"
-	echo "Try '$scriptName --help' for more information."
+	echo "Try '$script_name --help' for more information."
 	RC=$RC_MISSING_OPERAND
 	exit "$RC"
 fi
@@ -97,30 +97,30 @@ fi
 while [[ "$#" -gt 0 ]]; do
 	case "$1" in
 	-h | --help)
-		argHelp=true
+		arg_help=true
 		shift
 		;;
 	--version)
-		argVersion=true
+		arg_version=true
 		shift
 		;;
 	-v | --verbose)
-		argVerbose=true
+		arg_verbose=true
 		shift
 		;;
 	--list-exit-codes)
-		argListExitCodes=true
+		arg_list_exit_codes=true
 		shift
 		;;
 	-d | --directory)
 		# Check if the next argument is set (not empty, compliant with set -u)
 		if [ -n "${2+x}" ]; then
-			argDirectory="$2"
+			arg_directory="$2"
 		fi
 		# DIRECTORY must be set when using -d operand, and followed by a string which is not an operand
-		if [[ -z "$argDirectory" || $argDirectory == "--"* || $argDirectory == "-"* ]]; then
+		if [[ -z "$arg_directory" || $arg_directory == "--"* || $arg_directory == "-"* ]]; then
 			echo "Missing DIRECTORY" >&2
-			echo "Try '$scriptName --help' for more information."
+			echo "Try '$script_name --help' for more information."
 			RC=$RC_MISSING_DIRECTORY
 			exit "$RC"
 		fi
@@ -130,7 +130,7 @@ while [[ "$#" -gt 0 ]]; do
 		;;
 	*)
 		echo "Unknown operand: $1" >&2
-		echo "Try '$scriptName --help' for more information."
+		echo "Try '$script_name --help' for more information."
 		RC=$RC_UNKNOWN_OPERAND
 		exit "$RC"
 		;;
@@ -139,8 +139,8 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 # The target directory must exist and be accessible
-if [[ -n "$argDirectory" && ! -d "$argDirectory" && ! -r "$argDirectory" && ! -x "$argDirectory" ]]; then
-	echo "Error: $argDirectory is not a valid or readable directory." >&2
+if [[ -n "$arg_directory" && ! -d "$arg_directory" && ! -r "$arg_directory" && ! -x "$arg_directory" ]]; then
+	echo "Error: $arg_directory is not a valid or readable directory." >&2
 	RC=$RC_INVALID_DIRECTORY
 	exit "$RC"
 fi
@@ -159,7 +159,7 @@ fi
 function z_log() {
 
 	# Get the caller function name, or 'main' if called from main script
-	local functionName="${FUNCNAME[1]:-main}"
+	local function_name="${FUNCNAME[1]:-main}"
 
 	# Arguments assignation
 	if [ "$#" -ne 2 ]; then
@@ -185,7 +185,7 @@ function z_log() {
 			;;
 		esac
 
-		echo -e "[$level]\t$(date +'%Y-%m-%d %H:%M:%S') - $functionName($line): $message"
+		echo -e "[$level]\t$(date +'%Y-%m-%d %H:%M:%S') - $function_name($line): $message"
 
 		return 0
 
@@ -223,7 +223,7 @@ function z_die() {
 function z_help() {
 
 	cat <<-EOF
-		Usage: $scriptName [OPTION]
+		Usage: $script_name [OPTION]
 		Do anything with the DIRECTORY, if it really exists.
 
 		Mandatory arguments to long options are mandatory for short options too.
@@ -248,15 +248,16 @@ function z_help() {
 function z_list_exit_codes() {
 
 	cat <<-EOF
-		RC=0 : Success / default (no error).
-		RC=1 : Missing operand (no arguments provided).
-		RC=2 : Unknown operand (invalid option passed).
-		RC=3 : Internal error: log() called with wrong number of arguments.
-		RC=4 : Missing DIRECTORY for -d|--directory option (directory argument not provided or invalid).
-		RC=5 : Provided DIRECTORY does not exist (the target directory must exist and readable).
-		RC=6 : Internal error: checkdep() called with wrong number of arguments
-		RC=7 : Missing prerequisite (required command not found)
-		RC=8 : Internal error: trace() called with wrong number of arguments
+		RC=0   : Success / default (no error).
+		RC=1   : Missing operand (no arguments provided).
+		RC=2   : Unknown operand (invalid option passed).
+		RC=3   : Internal error: log() called with wrong number of arguments.
+		RC=4   : Missing DIRECTORY for -d|--directory option (directory argument not provided or invalid).
+		RC=5   : Provided DIRECTORY does not exist (the target directory must exist and readable).
+		RC=6   : Internal error: checkdep() called with wrong number of arguments
+		RC=7   : Missing prerequisite (required command not found)
+		RC=8   : Internal error: trace() called with wrong number of arguments
+		RC=124 : Dummy error for demonstration purposes
 		RC=125 : Unknown error
 	EOF
 
@@ -276,7 +277,7 @@ function z_trace() {
 
 	# Arguments assignation
 	if [ "$#" -ne 1 ]; then
-		echo -e "\t$functionName: Error: 1 argument required. Usage: trace BOOLEAN"
+		echo -e "\t$function_name: Error: 1 argument required. Usage: trace BOOLEAN"
 		RC=$RC_INTERNAL_TRC_ARGS
 		return "$RC_INTERNAL_TRC_ARGS"
 	fi
@@ -314,15 +315,15 @@ function z_checkdep() {
 		#return "$RC"
 	else
 
-		local commandCheck="$1"
+		local command_check="$1"
 
 		z_log "DEBUG" "Checking prerequisites..."
 
-		if command -v "$commandCheck" >/dev/null 2>&1; then
-			z_log "DEBUG" "'$commandCheck' was found."
+		if command -v "$command_check" >/dev/null 2>&1; then
+			z_log "DEBUG" "'$command_check' was found."
 			return 0
 		else
-			z_log "ERROR" "'$commandCheck' was not found."
+			z_log "ERROR" "'$command_check' was not found."
 			return 1
 		fi
 
@@ -340,19 +341,19 @@ function z_checkdep() {
 # errors:   None
 function z_dump() {
 
-	z_log "DEBUG" "Script start date: $scriptStartDate"
-	z_log "DEBUG" "Script start time (epoch): $scriptStartTime"
+	z_log "DEBUG" "Script start date: $script_start_date"
+	z_log "DEBUG" "Script start time (epoch): $script_start_time"
 
-	z_log "DEBUG" "Shell PID: $scriptPID"
-	z_log "DEBUG" "Shell PPID: $scriptPPID"
+	z_log "DEBUG" "Shell PID: $script_pid"
+	z_log "DEBUG" "Shell PPID: $script_ppid"
 
-	z_log "DEBUG" "Script full path: $scriptFullPath"
-	z_log "DEBUG" "Script directory: $scriptDir"
-	z_log "DEBUG" "Script name: $scriptName"
-	z_log "DEBUG" "Script path: $scriptPath"
+	z_log "DEBUG" "Script full path: $script_full_path"
+	z_log "DEBUG" "Script directory: $script_dir"
+	z_log "DEBUG" "Script name: $script_name"
+	z_log "DEBUG" "Script path: $script_path"
 
 	# Properly display all array elements: https://www.shellcheck.net/wiki/SC2128
-	z_log "DEBUG" "Script arguments: ${scriptArgs[*]}"
+	z_log "DEBUG" "Script arguments: ${script_args[*]}"
 
 	z_log "DEBUG" "User name: $USER"
 	z_log "DEBUG" "Host name: $HOSTNAME"
@@ -448,7 +449,7 @@ function main() {
 	# Insert your main code below this line
 
 	# Example: Sample line for the verbose flag
-	if [[ "$argVerbose" == true ]]; then
+	if [[ "$arg_verbose" == true ]]; then
 		z_dump
 	fi
 
@@ -460,7 +461,7 @@ function main() {
 	# dummy_function
 
 	# Example: Sample line for directory argument
-	z_log "INFO" "Target directory is: $argDirectory"
+	z_log "INFO" "Target directory is: $arg_directory"
 
 	# Example: Sample lines for dependency check
 	export sampleCommand="bash"
@@ -502,13 +503,13 @@ function main() {
 # -[ CORE             ]---------------------------------------------------------
 # Here is the core: Display help, version or run main()
 # Do not modify this part unless you know what you are doing
-if [[ "$argHelp" == true ]]; then
+if [[ "$arg_help" == true ]]; then
 	z_help
 	exit 0
-elif [[ "$argVersion" == true ]]; then
+elif [[ "$arg_version" == true ]]; then
 	echo "$APPNAME $VERSION"
 	exit 0
-elif [[ "$argListExitCodes" == true ]]; then
+elif [[ "$arg_list_exit_codes" == true ]]; then
 	z_list_exit_codes
 	exit 0
 else

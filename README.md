@@ -151,30 +151,30 @@ Codes | Description
 7. **Line 67** and later, assign a variable and a default value for each of your command line argument:
 
 ```bash
-argHelp=false
-argVersion=false
-argVerbose=false
-argListExitCodes=false
-argDirectory=""
+arg_help=false
+arg_version=false
+arg_verbose=false
+arg_list_exit_codes=false
+arg_directory=""
 ```
 
 8. **Line 84** to **Line 100**, set the list of strings to be matched as arguments in the command line and assign it to the variables listed at step **7**:
 
 ```bash
         -h|--help)
-            argHelp=true
+            arg_help=true
             shift
             ;;
         --version)
-            argVersion=true
+            arg_version=true
             shift
             ;;
         -v|--verbose)
-            argVerbose=true
+            arg_verbose=true
             shift
             ;;
         --list-exit-codes)
-            argListExitCodes=true
+            arg_list_exit_codes=true
             shift
             ;;
         -d|--directory)
@@ -184,9 +184,9 @@ Some arguments can handle a second keyword. See `--directory` as example.
 The string has to be defined but not be an argument by itself:
 
 ```bash
-            if [[ -z "$argDirectory" || $argDirectory == "--"* || $argDirectory == "-"* ]] ; then
+            if [[ -z "$arg_directory" || $arg_directory == "--"* || $arg_directory == "-"* ]] ; then
                 echo "Missing DIRECTORY" >&2;
-                echo "Try '$scriptName --help' for more information.";
+                echo "Try '$script_name --help' for more information.";
                 RC=4
                 exit $RC
             fi
@@ -232,7 +232,7 @@ Notes:
  **DESCRIPTION**
  
 &emsp;&emsp;Displays the MESSAGE preceded by a timestamp and the LEVEL of the event.\
-&emsp;&emsp;The local variable `functionName` is also displayed if available and defined.\
+&emsp;&emsp;The local variable `function_name` is also displayed if available and defined.\
 &emsp;&emsp;If not found, the default `undef()` function name is used.\
 &emsp;&emsp;Level can be (FATAL|ERROR|WARN|INFO|DEBUG).\
 &emsp;&emsp;The name of the calling function is automatically retrieved from log() via the Bash variable FUNCNAME[1].\
@@ -566,6 +566,7 @@ This codes can be changed, or new one can be added. The free range is **0–125*
 - 6 — Internal error: `z_checkdep()` called with wrong number of arguments
 - 7 — Missing prerequisite (required command not found)
 - 8 — Internal error: `z_trace()` called with wrong number of arguments
+- 124 — Dummy error for demonstration purposes
 - 125 — Unknown error
 
 ## Dependencies
@@ -612,8 +613,14 @@ Usage: zerg-larva.sh [OPTION]
 
 # Changelog
 
-### v1.0.10 - Internal functions rework (2025-12-18)
-* 1b8c5a3 2025-12-18 Fixed wrong function names in documentation
+### v1.0.11 - ZRGLRV-0004 ZRGLRV-0003 (2025-12-22)
+* e3073fd 2025-12-22 ZRGLRV-0003 Variables names switched to snake_case
+* 6d5f094 2025-12-22 Added dummy_function() as template example
+* 2ef1dde 2025-12-22 Added custom .editorconfig file to .gitignore
+* ce9e8d9 2025-12-22 Updated .gitignore with more temp files
+
+### v1.0.10 - Release v1.0.10 (2025-12-18)
+* a49aa06 2025-12-18 Fixed wrong function names in documentation
 * 01e843d 2025-12-18 Updated FILE_ID.DIZ with tag number v1.0.10
 * edebbc1 2025-12-18 Added FILE_ID.DIZ for BBS distribution
 * 6cad6f0 2025-12-18 Added ZERG.NFO file to project root
@@ -652,7 +659,7 @@ Usage: zerg-larva.sh [OPTION]
 
 ### v1.0.6 - 'man' section style documentation (2025-12-06)
 * 930a638 2025-12-06 Added man section for main() function
-* cd059ad 2025-12-06 Added man section for get_timestamp() function
+* cd059ad 2025-12-06 Added man section for getTimestamp() function
 * 2c72c41 2025-12-06 Added man section for dump() function
 * e71dd2a 2025-12-06 Added man section for log() function
 * 50b3b37 2025-12-06 Adding Bash docstrings to functions

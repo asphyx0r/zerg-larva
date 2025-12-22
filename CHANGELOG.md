@@ -1,8 +1,16 @@
 
+## v1.0.11
+References | Description | Author(s)
+--- | --- | ---
+e3073fd | ZRGLRV-0003 Variables names switched to snake_case | asphyx
+6d5f094 | Added dummy_function() as template example | asphyx
+2ef1dde | Added custom .editorconfig file to .gitignore | asphyx
+ce9e8d9 | Updated .gitignore with more temp files | asphyx
+
 ## v1.0.10
 References | Description | Author(s)
 --- | --- | ---
-1b8c5a3 | Fixed wrong function names in documentation | asphyx
+a49aa06 | Fixed wrong function names in documentation | asphyx
 01e843d | Updated FILE_ID.DIZ with tag number v1.0.10 | asphyx
 edebbc1 | Added FILE_ID.DIZ for BBS distribution | asphyx
 6cad6f0 | Added ZERG.NFO file to project root | asphyx
@@ -96,4 +104,4 @@ References | Description | Author(s)
 --- | --- | ---
 3bf9436 | Repo init: first commit | asphyx
 
-Updated: 2025-12-18 12:07:11
+Updated: 2025-12-22 16:26:56
