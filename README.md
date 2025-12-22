@@ -151,30 +151,30 @@ Codes | Description
 7. **Line 67** and later, assign a variable and a default value for each of your command line argument:
 
 ```bash
-argHelp=false
-argVersion=false
-argVerbose=false
-argListExitCodes=false
-argDirectory=""
+arg_help=false
+arg_version=false
+arg_verbose=false
+arg_list_exit_codes=false
+arg_directory=""
 ```
 
 8. **Line 84** to **Line 100**, set the list of strings to be matched as arguments in the command line and assign it to the variables listed at step **7**:
 
 ```bash
         -h|--help)
-            argHelp=true
+            arg_help=true
             shift
             ;;
         --version)
-            argVersion=true
+            arg_version=true
             shift
             ;;
         -v|--verbose)
-            argVerbose=true
+            arg_verbose=true
             shift
             ;;
         --list-exit-codes)
-            argListExitCodes=true
+            arg_list_exit_codes=true
             shift
             ;;
         -d|--directory)
@@ -184,9 +184,9 @@ Some arguments can handle a second keyword. See `--directory` as example.
 The string has to be defined but not be an argument by itself:
 
 ```bash
-            if [[ -z "$argDirectory" || $argDirectory == "--"* || $argDirectory == "-"* ]] ; then
+            if [[ -z "$arg_directory" || $arg_directory == "--"* || $arg_directory == "-"* ]] ; then
                 echo "Missing DIRECTORY" >&2;
-                echo "Try '$scriptName --help' for more information.";
+                echo "Try '$script_name --help' for more information.";
                 RC=4
                 exit $RC
             fi
@@ -232,7 +232,7 @@ Notes:
  **DESCRIPTION**
  
 &emsp;&emsp;Displays the MESSAGE preceded by a timestamp and the LEVEL of the event.\
-&emsp;&emsp;The local variable `functionName` is also displayed if available and defined.\
+&emsp;&emsp;The local variable `function_name` is also displayed if available and defined.\
 &emsp;&emsp;If not found, the default `undef()` function name is used.\
 &emsp;&emsp;Level can be (FATAL|ERROR|WARN|INFO|DEBUG).\
 &emsp;&emsp;The name of the calling function is automatically retrieved from log() via the Bash variable FUNCNAME[1].\
@@ -566,6 +566,7 @@ This codes can be changed, or new one can be added. The free range is **0–125*
 - 6 — Internal error: `z_checkdep()` called with wrong number of arguments
 - 7 — Missing prerequisite (required command not found)
 - 8 — Internal error: `z_trace()` called with wrong number of arguments
+- 124 — Dummy error for demonstration purposes
 - 125 — Unknown error
 
 ## Dependencies
