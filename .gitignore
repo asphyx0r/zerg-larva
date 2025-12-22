@@ -8,9 +8,11 @@
 .Trashes
 ._*
 .cache/
+.cache/**
 Thumbs.db
 ehthumbs.db
 .vscode/
+.vscode/**
 
 # Logs
 *.log
@@ -22,6 +24,10 @@ logs/**
 log/**
 
 # Temp and build artifacts
+tmp/
+temp/
+tmp/**
+temp/**
 *.tmp
 *.temp
 *.bak
@@ -33,11 +39,16 @@ log/**
 # Archives and exported bundles
 *.zip
 *.tar
+*.tar.gz
 *.gz
 *.tgz
 *.7z
 
 # Internal tools
+.env
 changelog.sh
 showlog.sh
+
+# Internal docs and templates
 TODO.md
+github-release-notes.txt
