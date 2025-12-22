@@ -41,6 +41,7 @@ readonly VERSION="v1.0.0"
 # RC_INTERNAL_DEP_ARGS:   6 — Internal error: `zcheckdep()` called with wrong number of arguments
 # RC_MISSING_PREREQ:      7 — Missing prerequisite (required command not found)
 # RC_INTERNAL_TRC_ARGS:   8 — Internal error: `z_trace()` called with wrong number of arguments
+# RC_DUMMY_ERROR:        	124 — Dummy error for demonstration purposes
 # RC_UNKNOWN:             125 — Unknown error
 readonly RC_OK=0
 readonly RC_MISSING_OPERAND=1
@@ -51,6 +52,7 @@ readonly RC_INVALID_DIRECTORY=5
 readonly RC_INTERNAL_DEP_ARGS=6
 readonly RC_MISSING_PREREQ=7
 readonly RC_INTERNAL_TRC_ARGS=8
+readonly RC_DUMMY_ERROR=124
 # shellcheck disable=SC2034  # Unused variables left for readability
 readonly RC_UNKNOWN=125
 
@@ -414,6 +416,29 @@ function get_timestamp() {
 
 }
 
+# name:     dummy_function()
+# summary:  Function placeholder / example
+# usage:    dummy_function
+# example:  dummy_function
+# input:		Any arguments
+# output:		None
+# return:		0
+# errors:		1 if no arguments passed
+function dummy_function() {
+	z_log "DEBUG" "Inside dummy_function"
+	if
+		(($# > 0))
+	then
+		z_log "DEBUG" "Arguments passed to dummy_function: $*"
+		return 0
+	else
+		z_log "DEBUG" "No arguments passed to dummy_function"
+		RC=$RC_DUMMY_ERROR
+		return "$RC"
+	fi
+
+}
+
 # -[ MAIN             ]---------------------------------------------------------
 # Go-go-go Gadgetomain!
 function main() {
@@ -429,6 +454,10 @@ function main() {
 
 	# Example: Sample line for function output
 	z_log "INFO" "$(get_timestamp)"
+
+	# Example: Sample line for dummy function
+	dummy_function "arg1" "arg2"
+	# dummy_function
 
 	# Example: Sample line for directory argument
 	z_log "INFO" "Target directory is: $argDirectory"

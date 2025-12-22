@@ -116,7 +116,7 @@ readonly APPNAME="ApplicationName"
 readonly VERSION="v1.0.0"
 ```
 
-6. **Line 45** to **Line 54**, list all the exit codes used by the script.
+6. **Line 46** to **Line 55**, list all the exit codes used by the script.
 
 ```bash
 readonly RC_OK=0
@@ -128,7 +128,7 @@ readonly RC_INVALID_DIRECTORY=5
 readonly RC_INTERNAL_DEP_ARGS=6
 readonly RC_MISSING_PREREQ=7
 readonly RC_INTERNAL_TRC_ARGS=8
-readonly RC_UNKNOWN=125
+readonly RC_DUMMY_ERROR=124
 ```
 
 The free range is **0–125**:
@@ -493,7 +493,35 @@ Notes:
  
  &emsp;&emsp;Timestamp string (`YYYYmmdd-HHMMSS`)
 
-------------------------------------------------------------------------------    
+ ------------------------------------------------------------------------------
+
+### dummy_function()
+
+------------------------------------------------------------------------------
+ **NAME**
+ 
+&emsp;&emsp;`dummy_function()` - Do nothing
+
+ **SYNOPSIS**
+ 
+&emsp; &emsp;`dummy_function`
+
+ **DESCRIPTION**
+ 
+&emsp;&emsp;Do nothing.\
+&emsp;&emsp;This function is a sample function to be used as template/skeleton\
+&emsp;&emsp;The purpose is to populate the User Functions script section.
+
+ **EXIT STATUS**
+ 
+&emsp;&emsp;0
+&emsp;&emsp;124 `RC_DUMMY_ERROR`: Wrong number of arguments.
+
+ **OUTPUT**
+ 
+ &emsp;&emsp;Nothing
+
+------------------------------------------------------------------------------        
 
 ### main()
 
