@@ -45,6 +45,7 @@ temp/**
 *.7z
 
 # Internal tools
+.editorconfig
 .env
 changelog.sh
 showlog.sh
