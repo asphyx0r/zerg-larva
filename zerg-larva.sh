@@ -24,6 +24,7 @@
 set -o errexit
 set -o nounset
 set -o pipefail
+set -o errtrace
 IFS=$' \t\n'
 
 # -[ USER GLOBALS     ]---------------------------------------------------------
@@ -61,6 +62,7 @@ readonly RC_UNKNOWN=125
 # Default system variables, I will use it later. DO NOT MODIFY.
 RC=$RC_OK
 function_name="undef()"
+IN_ERR_TRAP=0
 readonly script_pid="$$"
 readonly script_ppid="$PPID"
 readonly script_name="${0##*/}"
@@ -475,12 +477,47 @@ function z_trap_exit() {
 
 # name:     z_trap_error()
 # summary:  Basic trap: ERR handler to log context
-# usage:
-# example:
-# input:
-# output:
-# return:
-# errors:
+# usage:    trap 'z_trap_error' ERR
+# example:  trap 'z_trap_error' ERR
+# input:    None
+# output:   Log to STDOUT
+# return:   Exit code of the failed command/function
+# errors:   None
+# shellcheck disable=SC2329
+function z_trap_error() {
+
+	local rc=$?
+
+	((IN_ERR_TRAP)) && return "$rc"
+	IN_ERR_TRAP=1
+
+	# Save current shell flags (errexit/nounset/xtrace) then relax strict mode in handler
+	local had_e=0 had_u=0 had_x=0
+	[[ $- == *e* ]] && had_e=1
+	[[ $- == *u* ]] && had_u=1
+	[[ $- == *x* ]] && had_x=1
+	set +e +u +x
+
+	# Get the error context
+	local cmd="${BASH_COMMAND:-<unknown>}"
+	local line="${BASH_LINENO[0]:-0}"
+	local func="${FUNCNAME[1]:-main}"
+	local src="${BASH_SOURCE[1]:-${BASH_SOURCE[0]:-$0}}"
+
+	# Log
+	z_log "ERROR" "Command failed (rc=${rc}) at ${src}:${line} in ${func}(): ${cmd}" >&2 || true
+	# Stacktrace
+	z_stacktrace >&2 || true
+
+	# Restore flags saved before
+	((had_x)) && set -x
+	((had_u)) && set -u
+	((had_e)) && set -e
+
+	IN_ERR_TRAP=0
+
+	return "$rc"
+}
 
 # -[ USER FUNCTIONS   ]---------------------------------------------------------
 
@@ -540,7 +577,6 @@ function main() {
 
 	# Example: Sample line for dummy function
 	dummy_function "arg1" "arg2"
-	# dummy_function
 
 	# Example: Sample line for directory argument
 	z_log "INFO" "Target directory is: $arg_directory"
@@ -578,7 +614,9 @@ function main() {
 	# Insert your main code above this line
 
 	z_log "INFO" "$APPNAME $VERSION: End ($RC)"
+
 	return "$RC"
+
 }
 
 # -[ CORE             ]---------------------------------------------------------
@@ -594,6 +632,7 @@ elif [[ "$arg_list_exit_codes" == true ]]; then
 	z_list_exit_codes
 	exit 0
 else
-	main || RC=$?
+	main
+	RC=$?
 	exit "$RC"
 fi

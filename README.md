@@ -497,6 +497,40 @@ Notes:
 				 
 ------------------------------------------------------------------------------
 
+### z_trap_error()
+
+------------------------------------------------------------------------------
+ **NAME**
+ 
+&emsp;&emsp;`z_trap_error()` - Basic ERR trap
+
+ **SYNOPSIS**
+ 
+&emsp; &emsp;`trap 'z_trap_error' ERR`
+
+ **DESCRIPTION**
+ 
+&emsp;&emsp;This code snippet can be called when trapping an ERROR event.\
+&emsp;&emsp;Show The latest error code, and the command/function which failed.
+
+ **EXIT STATUS**
+ 
+&emsp;&emsp;Return the latest command error code
+
+ **OUTPUT**
+ 
+ &emsp;&emsp;Info log line:
+ ````
+[ERROR] 2025-12-23 19:13:03 - z_trap_error(487): Command failed (rc=1) at ./zerg-larva.sh:625 in run_case(): "$@"
+        Stack trace:
+        ↳ z_trap_error (zerg-larva.sh:487)
+          ↳ run_case (zerg-larva.sh:625)
+            ↳ main (zerg-larva.sh:635)
+              ↳ main (zerg-larva.sh:664)
+ ````                
+				 
+------------------------------------------------------------------------------
+
 ### get_timestamp()
 
 ------------------------------------------------------------------------------
