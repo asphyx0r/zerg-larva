@@ -388,30 +388,40 @@ function z_dump() {
 # errors:   None
 function z_stacktrace() {
 
-	local depth="${#FUNCNAME[@]}"
-	local i
-	local n
+	# Only dump information if verbose mode is enabled
+	if [[ "$arg_verbose" != true ]]; then
 
-	printf "\tStack trace:\n"
+		z_log "WARN" "Verbose mode is not enabled, cannot dump stacktrace."
+		return 0
 
-	# stacktrace starts at 1 to skip the current function (stacktrace)
-	for ((i = 1; i < depth; i++)); do
+	else
 
-		local func="${FUNCNAME[$i]}"
-		local file="${BASH_SOURCE[$i]##*/}"
-		local line="${BASH_LINENO[$((i - 1))]}"
+		local depth="${#FUNCNAME[@]}"
+		local i
+		local n
 
-		# Identation based on stack depth
-		local indent=""
-		for ((n = 1; n < i; n++)); do
-			indent+="  "
+		printf "\tStack trace:\n"
+
+		# stacktrace starts at 1 to skip the current function (stacktrace)
+		for ((i = 1; i < depth; i++)); do
+
+			local func="${FUNCNAME[$i]}"
+			local file="${BASH_SOURCE[$i]##*/}"
+			local line="${BASH_LINENO[$((i - 1))]}"
+
+			# Identation based on stack depth
+			local indent=""
+			for ((n = 1; n < i; n++)); do
+				indent+="  "
+			done
+
+			printf '\t%s↳ %s (%s:%s)\n' "$indent" "$func" "$file" "$line"
+
 		done
 
-		printf '\t%s↳ %s (%s:%s)\n' "$indent" "$func" "$file" "$line"
+		return 0
 
-	done
-
-	return 0
+	fi
 }
 
 # -[ USER FUNCTIONS   ]---------------------------------------------------------
@@ -490,7 +500,6 @@ function main() {
 	#z_trace 0
 
 	# Example: Sample lines for stacktrace
-	z_log "DEBUG" "Generating stacktrace..."
 	f3() { z_stacktrace; }
 	f2() { f3; }
 	f1() { f2; }
