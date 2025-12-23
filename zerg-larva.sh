@@ -88,8 +88,7 @@ arg_directory=""
 
 # I need at least one argument
 if [ "$#" -eq 0 ]; then
-	echo "Missing operand"
-	echo "Try '$script_name --help' for more information."
+	printf '%s: missing operand\nTry: %s --help\n' "$0" "$0" >&2
 	RC=$RC_MISSING_OPERAND
 	exit "$RC"
 fi
