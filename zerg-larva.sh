@@ -468,17 +468,17 @@ function main() {
 	z_dump
 
 	# Example: Sample line for function output
-	# z_log "INFO" "$(get_timestamp)"
+	z_log "INFO" "$(get_timestamp)"
 
 	# Example: Sample line for dummy function
-	# dummy_function "arg1" "arg2"
+	dummy_function "arg1" "arg2"
 	# dummy_function
 
 	# Example: Sample line for directory argument
-	# z_log "INFO" "Target directory is: $arg_directory"
+	z_log "INFO" "Target directory is: $arg_directory"
 
 	# Example: Sample lines for dependency check
-	export sample_command="bash"
+	local sample_command="bash"
 	if ! z_checkdep "$sample_command"; then
 		z_die "$RC_MISSING_PREREQ" "A required dependency '$sample_command' is missing, cannot continue."
 	fi
@@ -490,19 +490,19 @@ function main() {
 	#z_trace 0
 
 	# Example: Sample lines for stacktrace
-	# z_log "DEBUG" "Generating stacktrace..."
-	# f3() { z_stacktrace; }
-	# f2() { f3; }
-	# f1() { f2; }
-	# f1
+	z_log "DEBUG" "Generating stacktrace..."
+	f3() { z_stacktrace; }
+	f2() { f3; }
+	f1() { f2; }
+	f1
 
 	# Example: Some log level examples
-	# z_log "FATAL" "This is a fatal error, exiting..."
-	# z_log "ERROR" "Unable to connect the database"
-	# z_log "WARN" "Configuration file missing, using default values"
-	# z_log "INFO" "Successfully connected to the database"
-	# z_log "DEBUG" "Information for debugging purpose only"
-	# z_log "WRONG" "This value is not allowed, I don't trust you"
+	z_log "FATAL" "This is a fatal error, exiting..."
+	z_log "ERROR" "Unable to connect the database"
+	z_log "WARN" "Configuration file missing, using default values"
+	z_log "INFO" "Successfully connected to the database"
+	z_log "DEBUG" "Information for debugging purpose only"
+	z_log "WRONG" "This value is not allowed, I don't trust you"
 
 	# Example: set RC to non-zero if a simulated error occurs
 	# Uncomment the next line to simulate an error exit
