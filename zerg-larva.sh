@@ -424,6 +424,64 @@ function z_stacktrace() {
 	fi
 }
 
+# -[ TRAPS            ]---------------------------------------------------------
+
+# name:     z_trap_exit()
+# summary:  Basic trap: EXIT for cleanup
+# usage:    trap 'z_trap_exit' EXIT
+# example:  trap 'z_trap_exit' EXIT
+# input:    None
+# output:   Log to STDOUT
+# return:	  Exit code of the script
+# errors:		None
+# shellcheck disable=SC2329
+function z_trap_exit() {
+
+	# Capture the EXIT code of the script
+	local rc=$?
+
+	# Backup shell options the disable errexit, nounset and xtrace
+	local had_e=0 had_u=0 had_x=0
+	[[ $- == *e* ]] && had_e=1
+	[[ $- == *u* ]] && had_u=1
+	[[ $- == *x* ]] && had_x=1
+	set +e +u +x
+
+	# Get end timestamp
+	local end_ts
+	end_ts="$(date +'%Y-%m-%d %H:%M:%S')"
+
+	# Calculate script duration
+	local duration_s="?"
+	if [[ -n "${script_start_time:-}" ]]; then
+		duration_s="$(($(date +%s) - script_start_time))"
+	fi
+
+	# Log the exit information
+	if declare -F z_log >/dev/null 2>&1; then
+		z_log "INFO" "Exiting (RC=${rc}), End: ${end_ts}, Duration: ${duration_s}s" || true
+	else
+		printf '[INFO]\t%s - main(0): Exiting (RC=%s), End: %s, Duration: %ss\n' \
+			"$(date +'%Y-%m-%d %H:%M:%S')" "$rc" "$end_ts" "$duration_s"
+	fi
+
+	# Restore shell options saved before
+	((had_x)) && set -x
+	((had_u)) && set -u
+	((had_e)) && set -e
+
+	return "$rc"
+}
+
+# name:     z_trap_error()
+# summary:  Basic trap: ERR handler to log context
+# usage:
+# example:
+# input:
+# output:
+# return:
+# errors:
+
 # -[ USER FUNCTIONS   ]---------------------------------------------------------
 
 # name:     get_timestamp()

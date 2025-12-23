@@ -468,6 +468,35 @@ Notes:
 				 
 ------------------------------------------------------------------------------
 
+### z_trap_exit()
+
+------------------------------------------------------------------------------
+ **NAME**
+ 
+&emsp;&emsp;`z_trap_exit()` - Basic EXIT trap
+
+ **SYNOPSIS**
+ 
+&emsp; &emsp;`trap 'z_trap_exit' EXIT`
+
+ **DESCRIPTION**
+ 
+&emsp;&emsp;This code snippet can be called when trapping an EXIT event.\
+&emsp;&emsp;Show script return code, date and time of completion then duration.
+
+ **EXIT STATUS**
+ 
+&emsp;&emsp;Return the latest script RC
+
+ **OUTPUT**
+ 
+ &emsp;&emsp;Info log line:
+ ````
+[INFO]  2025-12-23 17:32:03 - z_trap_exit(462): Exiting (RC=0), End: 2025-12-23 17:32:03, Duration: 0s
+ ````                
+				 
+------------------------------------------------------------------------------
+
 ### get_timestamp()
 
 ------------------------------------------------------------------------------
