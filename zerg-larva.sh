@@ -180,12 +180,18 @@ function z_log() {
 		FATAL | ERROR | WARN | INFO | DEBUG) ;; # Allowed values baby
 		*)
 			# Set to DEBUG if not allowed
-			echo -e "\tlog(): $1 is not an allowed value, using DEBUG as default."
+			printf '\tlog(): %s is not an allowed value, using DEBUG as default.\n' "$1"
 			level="DEBUG"
 			;;
 		esac
 
-		echo -e "[$level]\t$(date +'%Y-%m-%d %H:%M:%S') - $function_name($line): $message"
+		# Output the log message
+		printf '[%s]\t%s - %s(%s): %s\n' \
+			"$level" \
+			"$(date +'%Y-%m-%d %H:%M:%S')" \
+			"$function_name" \
+			"$line" \
+			"$message"
 
 		return 0
 
