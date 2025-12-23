@@ -27,8 +27,8 @@ set -o pipefail
 IFS=$' \t\n'
 
 # -[ USER GLOBALS     ]---------------------------------------------------------
-readonly APPNAME="ApplicationName"
-readonly VERSION="v1.0.0"
+readonly APPNAME="__APPNAME__"
+readonly VERSION="__VERSION__"
 
 # -[ RETURN CODES     ]---------------------------------------------------------
 # Exit code constants (local to this script)
