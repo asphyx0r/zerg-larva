@@ -381,6 +381,7 @@ function z_stacktrace() {
 
 	local depth="${#FUNCNAME[@]}"
 	local i
+	local n
 
 	printf "\tStack trace:\n"
 
