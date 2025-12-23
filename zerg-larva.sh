@@ -344,25 +344,37 @@ function z_checkdep() {
 # errors:   None
 function z_dump() {
 
-	z_log "DEBUG" "Script start date: $script_start_date"
-	z_log "DEBUG" "Script start time (epoch): $script_start_time"
+	# Only dump information if verbose mode is enabled
+	if [[ "$arg_verbose" != true ]]; then
 
-	z_log "DEBUG" "Shell PID: $script_pid"
-	z_log "DEBUG" "Shell PPID: $script_ppid"
+		z_log "WARN" "Verbose mode is not enabled, cannot dump script information."
+		return 0
 
-	z_log "DEBUG" "Script full path: $script_full_path"
-	z_log "DEBUG" "Script directory: $script_dir"
-	z_log "DEBUG" "Script name: $script_name"
-	z_log "DEBUG" "Script path: $script_path"
+	else
 
-	# Properly display all array elements: https://www.shellcheck.net/wiki/SC2128
-	z_log "DEBUG" "Script arguments: ${script_args[*]}"
+		z_log "DEBUG" "Dumping script information..."
 
-	z_log "DEBUG" "User name: $USER"
-	z_log "DEBUG" "Host name: $HOSTNAME"
-	z_log "DEBUG" "Bash version: $BASH_VERSION"
+		z_log "DEBUG" "Script start date: $script_start_date"
+		z_log "DEBUG" "Script start time (epoch): $script_start_time"
 
-	return 0
+		z_log "DEBUG" "Shell PID: $script_pid"
+		z_log "DEBUG" "Shell PPID: $script_ppid"
+
+		z_log "DEBUG" "Script full path: $script_full_path"
+		z_log "DEBUG" "Script directory: $script_dir"
+		z_log "DEBUG" "Script name: $script_name"
+		z_log "DEBUG" "Script path: $script_path"
+
+		# Properly display all array elements: https://www.shellcheck.net/wiki/SC2128
+		z_log "DEBUG" "Script arguments: ${script_args[*]}"
+
+		z_log "DEBUG" "User name: ${USER:-unknown}"
+		z_log "DEBUG" "Host name: ${HOSTNAME:-unknown}"
+		z_log "DEBUG" "Bash version: ${BASH_VERSION:-unknown}"
+
+		return 0
+
+	fi
 
 }
 
@@ -453,19 +465,17 @@ function main() {
 	# Insert your main code below this line
 
 	# Example: Sample line for the verbose flag
-	if [[ "$arg_verbose" == true ]]; then
-		z_dump
-	fi
+	z_dump
 
 	# Example: Sample line for function output
-	z_log "INFO" "$(get_timestamp)"
+	# z_log "INFO" "$(get_timestamp)"
 
 	# Example: Sample line for dummy function
-	dummy_function "arg1" "arg2"
+	# dummy_function "arg1" "arg2"
 	# dummy_function
 
 	# Example: Sample line for directory argument
-	z_log "INFO" "Target directory is: $arg_directory"
+	# z_log "INFO" "Target directory is: $arg_directory"
 
 	# Example: Sample lines for dependency check
 	export sample_command="bash"
@@ -480,19 +490,19 @@ function main() {
 	#z_trace 0
 
 	# Example: Sample lines for stacktrace
-	z_log "DEBUG" "Generating stacktrace..."
-	f3() { z_stacktrace; }
-	f2() { f3; }
-	f1() { f2; }
-	f1
+	# z_log "DEBUG" "Generating stacktrace..."
+	# f3() { z_stacktrace; }
+	# f2() { f3; }
+	# f1() { f2; }
+	# f1
 
 	# Example: Some log level examples
-	z_log "FATAL" "This is a fatal error, exiting..."
-	z_log "ERROR" "Unable to connect the database"
-	z_log "WARN" "Configuration file missing, using default values"
-	z_log "INFO" "Successfully connected to the database"
-	z_log "DEBUG" "Information for debugging purpose only"
-	z_log "WRONG" "This value is not allowed, I don't trust you"
+	# z_log "FATAL" "This is a fatal error, exiting..."
+	# z_log "ERROR" "Unable to connect the database"
+	# z_log "WARN" "Configuration file missing, using default values"
+	# z_log "INFO" "Successfully connected to the database"
+	# z_log "DEBUG" "Information for debugging purpose only"
+	# z_log "WRONG" "This value is not allowed, I don't trust you"
 
 	# Example: set RC to non-zero if a simulated error occurs
 	# Uncomment the next line to simulate an error exit
