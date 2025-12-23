@@ -315,10 +315,7 @@ function z_checkdep() {
 	# Argument cannot be empty nor missing
 	if [[ -z ${1:-} ]]; then
 		z_log "ERROR" "Missing argument DEPENDENCY. Usage: z_checkdep \"DEPENDENCY\""
-		RC=$RC_INTERNAL_DEP_ARGS
-		# Being unable to check dependencies is a fatal error
-		exit "$RC"
-		#return "$RC"
+		return "$RC_INTERNAL_DEP_ARGS"
 	else
 
 		local command_check="$1"
@@ -330,7 +327,7 @@ function z_checkdep() {
 			return 0
 		else
 			z_log "ERROR" "'$command_check' was not found."
-			return 1
+			return "$RC_MISSING_PREREQ"
 		fi
 
 	fi
@@ -471,9 +468,9 @@ function main() {
 	z_log "INFO" "Target directory is: $arg_directory"
 
 	# Example: Sample lines for dependency check
-	export sampleCommand="bash"
-	if ! z_checkdep "$sampleCommand"; then
-		z_die "$RC_MISSING_PREREQ" "A required dependency '$sampleCommand' is missing, cannot continue."
+	export sample_command="bash"
+	if ! z_checkdep "$sample_command"; then
+		z_die "$RC_MISSING_PREREQ" "A required dependency '$sample_command' is missing, cannot continue."
 	fi
 
 	# Example: Sample lines for debug mode
