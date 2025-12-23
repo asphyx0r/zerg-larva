@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 #
-# Name        : <script_name>.sh
-# Description : Short description of the script purpose.
-# Usage       : script_name.sh [options]
-# Author      : Your Name - Your Email
-# Version     : v1.0.0
-# Date        : 2025-12-01
-# License     : MIT License
+# Name        : __SCRIPT_NAME__
+# Description : __SCRIPT_DESCRIPTION__
+# Usage       : __SCRIPT_NAME__ [options]
+# Author      : __AUTHOR_NAME__ - __AUTHOR_EMAIL__
+# Version     : __VERSION__
+# Date        : __RELEASE_DATE__
+# License     : __LICENSE_ID__
+# Repository  : __REPOSITORY_URL__
 #
 # Prerequisites:
 #   - Linux system running Debian 11 or later
