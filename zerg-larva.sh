@@ -37,12 +37,13 @@ readonly VERSION="__VERSION__"
 # RC_OK:                  0 — Success / default (no error)
 # RC_MISSING_OPERAND:     1 — Missing operand (no arguments provided)
 # RC_UNKNOWN_OPERAND:     2 — Unknown operand (invalid option passed)
-# RC_INTERNAL_LOG_ARGS:   3 — Internal error: `zlog()` called with wrong number of arguments
+# RC_INTERNAL_LOG_ARGS:   3 — Internal error: `z_log()` called with wrong number of arguments
 # RC_MISSING_DIRECTORY:   4 — Missing DIRECTORY for `-d|--directory` option (directory argument not provided or invalid)
 # RC_INVALID_DIRECTORY:   5 — Provided DIRECTORY does not exist or is not accessible
 # RC_INTERNAL_DEP_ARGS:   6 — Internal error: `zcheckdep()` called with wrong number of arguments
 # RC_MISSING_PREREQ:      7 — Missing prerequisite (required command not found)
 # RC_INTERNAL_TRC_ARGS:   8 — Internal error: `z_trace()` called with wrong number of arguments
+# RC_INTERNAL_INT_ARGS:   9 — Internal error: `z_log_level_to_int()` called with wrong number of arguments
 # RC_DUMMY_ERROR:        	124 — Dummy error for demonstration purposes
 # RC_UNKNOWN:             125 — Unknown error
 readonly RC_OK=0
@@ -54,9 +55,14 @@ readonly RC_INVALID_DIRECTORY=5
 readonly RC_INTERNAL_DEP_ARGS=6
 readonly RC_MISSING_PREREQ=7
 readonly RC_INTERNAL_TRC_ARGS=8
+readonly RC_INTERNAL_INT_ARGS=9
 readonly RC_DUMMY_ERROR=124
 # shellcheck disable=SC2034  # Unused variables left for readability
 readonly RC_UNKNOWN=125
+
+# -[ DEFAULT GLOBALS  ]---------------------------------------------------------
+# Global default (can be overridden by env: LOG_LEVEL=DEBUG ./script.sh ...)
+LOG_LEVEL="${LOG_LEVEL:-INFO}"
 
 # -[ INTERNAL GLOBALS ]---------------------------------------------------------
 # Default system variables, I will use it later. DO NOT MODIFY.
@@ -149,6 +155,38 @@ fi
 
 # -[ FUNCTIONS        ]---------------------------------------------------------
 
+# name:     z_log_level_to_int()
+# summary:  Convert log level string to integer
+# usage:    z_log_level_to_int <LEVEL>
+# example:  z_log_level_to_int "INFO"
+# input:    $1: LEVEL (FATAL, ERROR, WARN, INFO, DEBUG)
+# output:   INTeger
+# return:   0 in case of success
+# errors:   $RC_INTERNAL_INT_ARGS if not called with 1 arguments
+function z_log_level_to_int {
+
+	if [ "$#" -ne 1 ]; then
+		printf '\tz_log_level_to_int(): Error: 1 argument required. Usage: z_log_level_to_int "LEVEL"\n'
+		return "$RC_INTERNAL_INT_ARGS"
+	else
+
+		case "${1^^}" in
+
+		DEBUG) printf '%d' 10 ;;
+		INFO) printf '%d' 20 ;;
+		WARN) printf '%d' 30 ;;
+		ERROR) printf '%d' 40 ;;
+		FATAL) printf '%d' 50 ;;
+		*) printf '%d' 10 ;; # Default to DEBUG if unknown level
+
+		esac
+
+		return 0
+
+	fi
+
+}
+
 # name:     z_log()
 # summary:  Easy logging
 # usage:    z_log <LEVEL> <MESSAGE>
@@ -160,40 +198,68 @@ fi
 # errors:   $RC_INTERNAL_LOG_ARGS if not called with 2 arguments
 function z_log() {
 
-	# Get the caller function name, or 'main' if called from main script
-	local function_name="${FUNCNAME[1]:-main}"
-
 	# Arguments assignation
 	if [ "$#" -ne 2 ]; then
-		echo -e "\tlog(): Error: 2 arguments required. Usage: log \"LEVEL\" \"Log message\""
-		# RC=$RC_INTERNAL_LOG_ARGS
+
+		printf '\tlog(): Error: 2 arguments required. Usage: log "LEVEL" "Log message"\n'
 		return "$RC_INTERNAL_LOG_ARGS"
+
 	else
 
-		local level="$1"
-		local message="$2"
-		# Get the line number where log() was called
-		local line="${BASH_LINENO[0]}"
+		# Set the level to DEBUG if not provided (or empty)
+		local level="${1:-DEBUG}"
 
-		# Check if the LEVEL is set to an allowed value
-		case "$1" in
-		FATAL | ERROR | WARN | INFO | DEBUG) ;; # Allowed values baby
-		*)
-			# Set to DEBUG if not allowed
-			printf '\tlog(): %s is not an allowed value, using DEBUG as default.\n' "$1"
-			level="DEBUG"
-			;;
-		esac
+		# Convert levels to integers for comparison
+		local -i lvl_int thr_int
+		lvl_int="$(z_log_level_to_int "$level")"
+		thr_int="$(z_log_level_to_int "${LOG_LEVEL:-INFO}")"
 
-		# Output the log message
-		printf '[%s]\t%s - %s(%s): %s\n' \
-			"$level" \
-			"$(date +'%Y-%m-%d %H:%M:%S')" \
-			"$function_name" \
-			"$line" \
-			"$message"
+		# Remove possible carriage return characters (Windows line endings)
+		lvl_int="${lvl_int//$'\r'/}"
+		thr_int="${thr_int//$'\r'/}"
 
-		return 0
+		# Compare log level with threshold
+		if ((lvl_int < thr_int)); then
+			# Log level is below the threshold, do not log
+			# echo "DEBUG: Skipping log message at level $level below threshold ${LOG_LEVEL:-INFO}" >&2
+			return 0
+		else
+
+			# Get the caller function name, or 'main' if called from main script
+			local caller_function_name=${FUNCNAME[1]:-main}
+			# Get the line number where z_log() was called
+			local caller_line_number=${BASH_LINENO[0]:-0}
+
+			# Collect all remaining arguments as the message
+			shift || true
+			# Clean the message from non-printable characters
+			local message_raw="$*"
+			local message_clean
+			message_clean="$(printf '%s' "$message_raw" | tr -d '\000-\010\013\014\016-\037')"
+
+			# Check if the LEVEL is set to an allowed value
+			case "$level" in
+			FATAL | ERROR | WARN | INFO | DEBUG) ;; # Allowed values baby
+			*)
+				# Set to DEBUG if not allowed
+				printf '\tlog(): %s is not an allowed value, using DEBUG as default.\n' "$level"
+				level="DEBUG"
+				;;
+			esac
+
+			# Output the log message
+			# YYYY-MM-DD HH:MM:SS [LEVEL] - func(line): message
+			# [LEVEL] is always 5 characters wide, left-aligned
+			printf '%s [%-5.5s] - %s(%s): %s\n' \
+				"$(date +'%Y-%m-%d %H:%M:%S')" \
+				"$level" \
+				"$caller_function_name" \
+				"$caller_line_number" \
+				"$message_clean"
+
+			return 0
+
+		fi
 
 	fi
 

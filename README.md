@@ -92,7 +92,7 @@ asphyx@KERRIGAN:~/code$ mv ./zerg-larva.sh vxBackup.sh
 asphyx@KERRIGAN:~/code$ nano vxBackup.sh 
 ```
 
-4. **Line 3** to **Line 17** and beyond, document the script using the header template:
+4. **Line 3** to **Line 19** and beyond, document the script using the header template:
 
 ```bash
 # Name        : <script_name>.sh
@@ -102,21 +102,22 @@ asphyx@KERRIGAN:~/code$ nano vxBackup.sh
 # Version     : v1.0.0
 # Date        : 2025-12-01
 # License     : MIT License
+# Repository  : https://github.com/yourname/script_name.git
 ```
 
-5. **Line 29**, edit the value of the variable `APPNAME` to set your application human-readable name:
+5. **Line 31**, edit the value of the variable `APPNAME` to set your application human-readable name:
 
 ```bash
 readonly APPNAME="ApplicationName"
 ```
 
-5. **Line 30**, edit the value of the variable `VERSION` to set your application version number:
+5. **Line 32**, edit the value of the variable `VERSION` to set your application version number:
 
 ```bash
 readonly VERSION="v1.0.0"
 ```
 
-6. **Line 46** to **Line 55**, list all the exit codes used by the script.
+6. **Line 49** to **Line 59**, list all the exit codes used by the script.
 
 ```bash
 readonly RC_OK=0
@@ -128,6 +129,7 @@ readonly RC_INVALID_DIRECTORY=5
 readonly RC_INTERNAL_DEP_ARGS=6
 readonly RC_MISSING_PREREQ=7
 readonly RC_INTERNAL_TRC_ARGS=8
+readonly RC_INTERNAL_INT_ARGS=9
 readonly RC_DUMMY_ERROR=124
 ```
 
@@ -146,9 +148,12 @@ Codes | Description
 **126–127** | Reserved by POSIX for standard system error cases.
 **128–255** | Reserved for signal terminations.
 
+7. **Line 65**, define the default log level threshold:
+```bash
+LOG_LEVEL="${LOG_LEVEL:-INFO}"
+```
 
-
-7. **Line 67** and later, assign a variable and a default value for each of your command line argument:
+8. **Line 91** and later, assign a variable and a default value for each of your command line argument:
 
 ```bash
 arg_help=false
@@ -158,7 +163,7 @@ arg_list_exit_codes=false
 arg_directory=""
 ```
 
-8. **Line 84** to **Line 100**, set the list of strings to be matched as arguments in the command line and assign it to the variables listed at step **7**:
+9. **Line 107** and later, set the list of strings to be matched as arguments in the command line and assign it to the variables listed at step **8**:
 
 ```bash
         -h|--help)
@@ -232,11 +237,13 @@ Notes:
  **DESCRIPTION**
  
 &emsp;&emsp;Displays the MESSAGE preceded by a timestamp and the LEVEL of the event.\
-&emsp;&emsp;The local variable `function_name` is also displayed if available and defined.\
-&emsp;&emsp;If not found, the default `undef()` function name is used.\
 &emsp;&emsp;Level can be (FATAL|ERROR|WARN|INFO|DEBUG).\
-&emsp;&emsp;The name of the calling function is automatically retrieved from log() via the Bash variable FUNCNAME[1].\
-&emsp;&emsp;The line number where the log() function is called is recorded in the log message.
+&emsp;&emsp;The name of the calling function is automatically retrieved from `z_log()` via the Bash variable FUNCNAME[1].\
+&emsp;&emsp;The line number where the `z_log()` function is called is recorded in the log message.\
+&emsp;&emsp;Pattern: `YYYY-MM-DD HH:MM:SS [LEVEL] - func(line): message`\
+&emsp;&emsp;`[LEVEL]` will always be truncated to 5 caracters.\
+&emsp;&emsp;Messages below threshold defined by the global variable `LOG_LEVEL` won't be displayed.\
+&emsp;&emsp;(can be overridden by env: `LOG_LEVEL=DEBUG ./script.sh ...`)
 
  **EXIT STATUS**
  
