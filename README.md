@@ -238,12 +238,12 @@ Notes:
  
 &emsp;&emsp;Displays the MESSAGE preceded by a timestamp and the LEVEL of the event.\
 &emsp;&emsp;Level can be (FATAL|ERROR|WARN|INFO|DEBUG).\
-&emsp;&emsp;The name of the calling function is automatically retrieved from `z_log()` via the Bash variable FUNCNAME[1].\
-&emsp;&emsp;The line number where the `z_log()` function is called is recorded in the log message.\
-&emsp;&emsp;Pattern: `YYYY-MM-DD HH:MM:SS [LEVEL] - func(line): message`\
-&emsp;&emsp;`[LEVEL]` will always be truncated to 5 caracters.\
 &emsp;&emsp;Messages below threshold defined by the global variable `LOG_LEVEL` won't be displayed.\
-&emsp;&emsp;(can be overridden by env: `LOG_LEVEL=DEBUG ./script.sh ...`)
+&emsp;&emsp;(can be overridden by env: `LOG_LEVEL=DEBUG ./script.sh ...`)\
+&emsp;&emsp;WARN messages and above are routed to STDERR:\
+&emsp;&emsp;`./zerg-larva.sh -d /home/asphyx/ >out.log 2>err.log`
+&emsp;&emsp;Output pattern: `YYYY-MM-DD HH:MM:SS [LEVEL] - func(line): message`\
+&emsp;&emsp;`[LEVEL]` will always be truncated to 5 caracters.
 
  **EXIT STATUS**
  
