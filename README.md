@@ -314,8 +314,8 @@ Notes:
  **SYNOPSIS**
  
 &emsp;&emsp;`z_trace BOOLEAN`\
-&emsp;&emsp;0 : Disable tracing\
-&emsp;&emsp;1 : Enable tracing
+&emsp;&emsp;0 | off | false : Disable tracing\
+&emsp;&emsp;1 | on | true   : Enable tracing
 
  **DESCRIPTION**
  
@@ -329,6 +329,7 @@ Notes:
  
 &emsp;&emsp;0 : Success\
 &emsp;&emsp;RC_INTERNAL_TRC_ARGS if called with wrong number of arguments (1 expected)
+&emsp;&emsp;RC_INTERNAL_TRC_ARGS if called invalid argument (Boolean expected)
 
  **OUTPUT**
  

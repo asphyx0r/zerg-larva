@@ -292,13 +292,13 @@ function z_list_exit_codes() {
 # input:    $1: 1 or 0 (enable/disable tracing)
 # output:   Debugging information to STDERR
 # return:   0 on success
-# errors:   RC_INTERNAL_TRC_ARGS if called with wrong number of arguments (1 expected)
+# errors:   RC_INTERNAL_TRC_ARGS if called with wrong number of arguments (1 expected) nor boolean value
 # shellcheck disable=SC2329
 function z_trace() {
 
 	# Arguments assignation
 	if [ "$#" -ne 1 ]; then
-		echo -e "\t$function_name: Error: 1 argument required. Usage: trace BOOLEAN"
+		echo -e "\t${FUNCNAME[0]}: Error: 1 argument required. Usage: trace BOOLEAN"
 		RC=$RC_INTERNAL_TRC_ARGS
 		return "$RC_INTERNAL_TRC_ARGS"
 	fi
@@ -306,11 +306,24 @@ function z_trace() {
 	local line="${BASH_LINENO[0]}"
 	echo "Line number: $line"
 
-	if [[ "$1" -eq 1 ]]; then
+	case "$1" in
+	1 | on | true)
 		set -x
-	else
+		;;
+	0 | off | false)
 		set +x 2>/dev/null || true
-	fi
+		;;
+	*)
+		echo -e "\t${FUNCNAME[0]}: Error: Invalid argument. Usage: trace BOOLEAN (1|0)"
+		return "$RC_INTERNAL_TRC_ARGS"
+		;;
+	esac
+
+	# if [[ "$1" -eq 1 ]]; then
+	# 	set -x
+	# else
+	# 	set +x 2>/dev/null || true
+	# fi
 
 	return 0
 
@@ -602,8 +615,8 @@ function main() {
 
 	# Example: Sample lines for debug mode
 	#z_trace 1
-	#export sampleVar="This is a sample variable"
-	#z_log "DEBUG" "Sample variable value: $sampleVar"
+	#export sample_variable="This is a sample variable"
+	#z_log "DEBUG" "Sample variable value: $sample_variable"
 	#z_trace 0
 
 	# Example: Sample lines for stacktrace
