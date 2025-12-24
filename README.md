@@ -349,8 +349,9 @@ Notes:
 
  **DESCRIPTION**
 
-&emsp;&emsp;Displays the MESSAGE on STDOUT (error message)\
-&emsp;&emsp;Exits with the provided EXIT_CODE
+&emsp;&emsp;Display the MESSAGE on STDOUT (error message)\
+&emsp;&emsp;Exits with the provided EXIT_CODE (Return RC_UNKNOWN if non-numeric code used)
+&emsp;&emsp;Display stacktrace if `--verbose` mode enabled
 
  **EXIT STATUS**
  
