@@ -459,6 +459,7 @@ Notes:
  
 &emsp;&emsp;Display stack trace to STDOUT.\
 &emsp;&emsp;Show parent function, script name and line number.
+&emsp;&emsp;Active only if the `--verbose` argument is passed on the command line
 
  **EXIT STATUS**
  
