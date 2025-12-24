@@ -147,8 +147,8 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 # The target directory must exist and be accessible
-if [[ -n "$arg_directory" && ! -d "$arg_directory" && ! -r "$arg_directory" && ! -x "$arg_directory" ]]; then
-	echo "Error: $arg_directory is not a valid or readable directory." >&2
+if [[ -n "$arg_directory" && (! -d "$arg_directory" || ! -x "$arg_directory") ]]; then
+	printf 'Error: %s is not a directory or is not accessible.\n' "$arg_directory" >&2
 	RC=$RC_INVALID_DIRECTORY
 	exit "$RC"
 fi

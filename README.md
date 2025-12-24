@@ -687,6 +687,32 @@ Usage: zerg-larva.sh [OPTION]
 
 # Changelog
 
+### v1.0.12 - Hardened release (2025-12-24)
+* 170ccd4 2025-12-24 Fixed target directory validation logic
+* bd404d8 2025-12-24 Added --verbose to z_stacktrace() description
+* 59a2ebd 2025-12-24 README improvements and useless variable removal
+* 6fdd15d 2025-12-24 Updated README.md to reflect z_log() changes
+* 2a2212b 2025-12-24 STDOUT/STDERR filtering based on level in z_log()
+* 8257e56 2025-12-24 Allow multiples arguments as message in z_log()
+* 78de3bf 2025-12-24 Improvement to the z_log() function
+* bc68d4e 2025-12-24 Improvement to the z_trace() function
+* 326d685 2025-12-24 Updated z_die() entry in README.md
+* 42d220f 2025-12-24 Improvement to the z_die() function
+* accba42 2025-12-24 z_log() returns RC_INTERNAL_LOG_ARGS on wrong args
+* 5878068 2025-12-23 Added z_trap_error() to catch ERR events
+* b65cef3 2025-12-23 Added trap to log exit info on script termination
+* 5d25adf 2025-12-23 z_stacktrace() only available in verbose mode
+* 2c62f16 2025-12-23 Standardized CLI behavior: handle no args cleanly
+* bdf3fd8 2025-12-23 Fixed catching of main() return code
+* 7b2f5c7 2025-12-23 Application Name and Version replaced by tokens
+* 53e1905 2025-12-23 Replacing metadata examples with tokens
+* 5f02bbb 2025-12-23 Fixed gloabl variable "sample_command" in main()
+* a1a6107 2025-12-23 Fixed z_dump() behaviour
+* aa327e0 2025-12-23 Fixed return logic in z_checkdep()
+* 629ee28 2025-12-23 Added n var. to the local z_stacktrace() namespace
+* 64ac794 2025-12-23 Using printf instead of echo to avoid escape issue
+* 684e1cc 2025-12-22 ZRGLRV-0003 Variables names switched to snake_case
+
 ### v1.0.11 - ZRGLRV-0004 ZRGLRV-0003 (2025-12-22)
 * e3073fd 2025-12-22 ZRGLRV-0003 Variables names switched to snake_case
 * 6d5f094 2025-12-22 Added dummy_function() as template example

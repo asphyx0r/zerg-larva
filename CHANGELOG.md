@@ -1,4 +1,32 @@
 
+## v1.0.12
+References | Description | Author(s)
+--- | --- | ---
+170ccd4 | Fixed target directory validation logic | asphyx
+bd404d8 | Added --verbose to z_stacktrace() description | asphyx
+59a2ebd | README improvements and useless variable removal | asphyx
+6fdd15d | Updated README.md to reflect z_log() changes | asphyx
+2a2212b | STDOUT/STDERR filtering based on level in z_log() | asphyx
+8257e56 | Allow multiples arguments as message in z_log() | asphyx
+78de3bf | Improvement to the z_log() function | asphyx
+bc68d4e | Improvement to the z_trace() function | asphyx
+326d685 | Updated z_die() entry in README.md | asphyx
+42d220f | Improvement to the z_die() function | asphyx
+accba42 | z_log() returns RC_INTERNAL_LOG_ARGS on wrong args | asphyx
+5878068 | Added z_trap_error() to catch ERR events | asphyx
+b65cef3 | Added trap to log exit info on script termination | asphyx
+5d25adf | z_stacktrace() only available in verbose mode | asphyx
+2c62f16 | Standardized CLI behavior: handle no args cleanly | asphyx
+bdf3fd8 | Fixed catching of main() return code | asphyx
+7b2f5c7 | Application Name and Version replaced by tokens | asphyx
+53e1905 | Replacing metadata examples with tokens | asphyx
+5f02bbb | Fixed gloabl variable "sample_command" in main() | asphyx
+a1a6107 | Fixed z_dump() behaviour | asphyx
+aa327e0 | Fixed return logic in z_checkdep() | asphyx
+629ee28 | Added n var. to the local z_stacktrace() namespace | asphyx
+64ac794 | Using printf instead of echo to avoid escape issue | asphyx
+684e1cc | ZRGLRV-0003 Variables names switched to snake_case | asphyx
+
 ## v1.0.11
 References | Description | Author(s)
 --- | --- | ---
@@ -104,4 +132,4 @@ References | Description | Author(s)
 --- | --- | ---
 3bf9436 | Repo init: first commit | asphyx
 
-Updated: 2025-12-22 16:26:56
+Updated: 2025-12-24 18:43:08
