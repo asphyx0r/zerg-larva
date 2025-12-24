@@ -167,9 +167,7 @@ function z_log() {
 	if [ "$#" -ne 2 ]; then
 		echo -e "\tlog(): Error: 2 arguments required. Usage: log \"LEVEL\" \"Log message\""
 		RC=$RC_INTERNAL_LOG_ARGS
-		# Being unable to log is not a fatal error but should be tested by the caller
-		# exit "$RC"
-		return "$RC"
+		return "$RC_INTERNAL_LOG_ARGS"
 	else
 
 		local level="$1"
