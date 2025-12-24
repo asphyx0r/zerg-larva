@@ -199,9 +199,9 @@ function z_log_level_to_int {
 function z_log() {
 
 	# Arguments assignation
-	if [ "$#" -ne 2 ]; then
+	if (( $# < 2 )); then
 
-		printf '\tlog(): Error: 2 arguments required. Usage: log "LEVEL" "Log message"\n'
+		printf '\tlog(): Error: At least 2 arguments required. Usage: log "LEVEL" "Log message"\n'
 		return "$RC_INTERNAL_LOG_ARGS"
 
 	else
@@ -231,6 +231,7 @@ function z_log() {
 			local caller_line_number=${BASH_LINENO[0]:-0}
 
 			# Collect all remaining arguments as the message
+			# <level> <message1> <message2> ...
 			shift || true
 			# Clean the message from non-printable characters
 			local message_raw="$*"
