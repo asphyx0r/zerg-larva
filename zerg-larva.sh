@@ -199,7 +199,7 @@ function z_log_level_to_int {
 function z_log() {
 
 	# Arguments assignation
-	if (( $# < 2 )); then
+	if (($# < 2)); then
 
 		printf '\tlog(): Error: At least 2 arguments required. Usage: log "LEVEL" "Log message"\n'
 		return "$RC_INTERNAL_LOG_ARGS"
@@ -248,6 +248,14 @@ function z_log() {
 				;;
 			esac
 
+			# Define the output
+			# 2 for WARN, ERROR and FATAL, 1 otherwise
+			local out_fd
+			case "$level" in
+			WARN | ERROR | FATAL) out_fd=2 ;;
+			*) out_fd=1 ;;
+			esac
+
 			# Output the log message
 			# YYYY-MM-DD HH:MM:SS [LEVEL] - func(line): message
 			# [LEVEL] is always 5 characters wide, left-aligned
@@ -256,7 +264,7 @@ function z_log() {
 				"$level" \
 				"$caller_function_name" \
 				"$caller_line_number" \
-				"$message_clean"
+				"$message_clean" >&"$out_fd"
 
 			return 0
 
