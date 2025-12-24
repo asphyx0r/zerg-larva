@@ -67,7 +67,7 @@ LOG_LEVEL="${LOG_LEVEL:-INFO}"
 # -[ INTERNAL GLOBALS ]---------------------------------------------------------
 # Default system variables, I will use it later. DO NOT MODIFY.
 RC=$RC_OK
-function_name="undef()"
+# function_name="undef()"
 IN_ERR_TRAP=0
 readonly script_pid="$$"
 readonly script_ppid="$PPID"

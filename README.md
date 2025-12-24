@@ -421,6 +421,7 @@ Notes:
  
 &emsp;&emsp;Print debug information about the script (name, path, full path, arguments, system variables).\
 &emsp;&emsp;The `z_log()` function is used to output the system variables.
+&emsp;&emsp;Active only if the `--verbose` argument is passed on the command line
 
  **EXIT STATUS**
  
