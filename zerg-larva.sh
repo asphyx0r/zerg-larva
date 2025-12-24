@@ -166,7 +166,7 @@ function z_log() {
 	# Arguments assignation
 	if [ "$#" -ne 2 ]; then
 		echo -e "\tlog(): Error: 2 arguments required. Usage: log \"LEVEL\" \"Log message\""
-		RC=$RC_INTERNAL_LOG_ARGS
+		# RC=$RC_INTERNAL_LOG_ARGS
 		return "$RC_INTERNAL_LOG_ARGS"
 	else
 
@@ -206,13 +206,28 @@ function z_log() {
 # input:    $1: EXIT_CODE (integer)
 #           $2: Error message (string)
 # output:   String to STDOUT (error message)
+#           Stacktraece to STDOUT (if verbose mode is enabled)
 # return:   None
 # errors:   Exits with the provided EXIT_CODE
 function z_die() {
 
 	local exit_code="$1"
 	shift
-	z_log "ERROR" "$@"
+
+	# If multiple arguments are passed, join them as a single message
+	local msg="$*"
+
+	# Validate numeric exit code; fallback to RC_UNKNOWN
+	if [[ ! "$exit_code" =~ ^[0-9]+$ ]]; then
+		exit_code="$RC_UNKNOWN"
+	fi
+
+	# Log the error message
+	z_log "ERROR" "$msg ($exit_code)"
+
+	# Dump stacktrace for debug purpose (verbose mode only)
+	z_stacktrace
+
 	RC=$exit_code
 	exit "$exit_code"
 
@@ -308,7 +323,7 @@ function z_trace() {
 # input:    $1: DEPENDENCY (string, command to check)
 # output:   Check result to STDOUT (via log function)
 # return:   True if the dependency is found, False otherwise
-# errors:   Exit with RC_INTERNAL_DEP_ARGS if called with wrong number of arguments (1 expected)
+# errors:   Return with RC_INTERNAL_DEP_ARGS if called with wrong number of arguments (1 expected)
 function z_checkdep() {
 
 	# Arguments assignation
