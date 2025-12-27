@@ -723,6 +723,12 @@ function main() {
 # -[ CORE             ]---------------------------------------------------------
 # Here is the core: Display help, version or run main()
 # Do not modify this part unless you know what you are doing
+
+# Set traps before running main
+trap 'z_trap_exit' EXIT
+trap 'z_trap_error' ERR
+
+# Execute according to arguments or run main()
 if [[ "$arg_help" == true ]]; then
 	z_help
 	exit 0
@@ -733,11 +739,9 @@ elif [[ "$arg_list_exit_codes" == true ]]; then
 	z_list_exit_codes
 	exit 0
 else
-
 	if ! main; then
 		RC=$?
 	fi
-
 fi
 
 exit "$RC"
