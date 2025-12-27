@@ -504,12 +504,7 @@ function z_dump() {
 function z_stacktrace() {
 
 	# Only dump information if verbose mode is enabled
-	if [[ "$arg_verbose" != true ]]; then
-
-		z_log "WARN" "Verbose mode is not enabled, cannot dump stacktrace."
-		return 0
-
-	else
+	if [[ "$arg_verbose" = true ]]; then
 
 		local depth="${#FUNCNAME[@]}"
 		local i
