@@ -209,6 +209,11 @@ function z_log() {
 		# Set the level to DEBUG if not provided (or empty)
 		local level="${1:-DEBUG}"
 
+		# Enforce uppercase and remove spaces
+		level="${level^^}"
+		level="${level//$'\r'/}"
+		level="${level//[[:space:]]/}"
+
 		# Convert levels to integers for comparison
 		local -i lvl_int thr_int
 		lvl_int="$(z_log_level_to_int "$level")"
