@@ -170,7 +170,14 @@ function z_log_level_to_int {
 		return "$RC_INTERNAL_INT_ARGS"
 	else
 
-		case "${1^^}" in
+		local level="$1"
+
+		# Sanity check on argument: enforce uppercase and remove spaces
+		level="${level^^}"
+		level="${level//$'\r'/}"
+		level="${level//[[:space:]]/}"
+
+		case "$level" in
 
 		DEBUG) printf '%d' 10 ;;
 		INFO) printf '%d' 20 ;;
