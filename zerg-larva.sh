@@ -208,7 +208,7 @@ function z_log() {
 	# Arguments assignation
 	if (($# < 2)); then
 
-		printf '\tlog(): Error: At least 2 arguments required. Usage: log "LEVEL" "Log message"\n'
+		printf '\tz_log(): Error: At least 2 arguments required. Usage: log "LEVEL" "Log message"\n' >&2
 		return "$RC_INTERNAL_LOG_ARGS"
 
 	else
@@ -255,7 +255,7 @@ function z_log() {
 			FATAL | ERROR | WARN | INFO | DEBUG) ;; # Allowed values baby
 			*)
 				# Set to DEBUG if not allowed
-				printf '\tlog(): %s is not an allowed value, using DEBUG as default.\n' "$level"
+				printf '\tz_log(): %s is not an allowed value, using DEBUG as default.\n' "$level" >&2
 				level="DEBUG"
 				;;
 			esac
