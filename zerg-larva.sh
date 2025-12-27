@@ -733,7 +733,11 @@ elif [[ "$arg_list_exit_codes" == true ]]; then
 	z_list_exit_codes
 	exit 0
 else
-	main
-	RC=$?
-	exit "$RC"
+
+	if ! main; then
+		RC=$?
+	fi
+
 fi
+
+exit "$RC"
