@@ -80,19 +80,25 @@ asphyx@KERRIGAN:~/code$ git clone https://github.com/asphyx0r/zerg-larva.git Pro
 asphyx@KERRIGAN:~/code$ cd ProjectName
 ```
 
-2. Duplicate and rename original file `zerg-larva.sh` to your target script:
+2. Update script headers using Makefile:
+
+```console
+asphyx@KERRIGAN:~/code$ make release
+```
+
+3. Duplicate and rename original file `zerg-larva.sh` to your target script:
 
 ```console
 asphyx@KERRIGAN:~/code$ mv ./zerg-larva.sh vxBackup.sh
 ```
 
-3. Edit your new file with your favorite editor:
+4. Edit your new file with your favorite editor:
 
 ```console
 asphyx@KERRIGAN:~/code$ nano vxBackup.sh 
 ```
 
-4. **Line 3** to **Line 19** and beyond, document the script using the header template:
+5. **Line 3** to **Line 19** and beyond, document the script using the header template:
 
 ```bash
 # Name        : <script_name>.sh
@@ -105,19 +111,19 @@ asphyx@KERRIGAN:~/code$ nano vxBackup.sh
 # Repository  : https://github.com/yourname/script_name.git
 ```
 
-5. **Line 31**, edit the value of the variable `APPNAME` to set your application human-readable name:
+6. **Line 31**, edit the value of the variable `APPNAME` to set your application human-readable name:
 
 ```bash
 readonly APPNAME="ApplicationName"
 ```
 
-5. **Line 32**, edit the value of the variable `VERSION` to set your application version number:
+7. **Line 32**, edit the value of the variable `VERSION` to set your application version number:
 
 ```bash
 readonly VERSION="v1.0.0"
 ```
 
-6. **Line 49** to **Line 59**, list all the exit codes used by the script.
+8. **Line 49** to **Line 59**, list all the exit codes used by the script.
 
 ```bash
 readonly RC_OK=0
@@ -148,12 +154,12 @@ Codes | Description
 **126–127** | Reserved by POSIX for standard system error cases.
 **128–255** | Reserved for signal terminations.
 
-7. **Line 65**, define the default log level threshold:
+9. **Line 65**, define the default log level threshold:
 ```bash
 LOG_LEVEL="${LOG_LEVEL:-INFO}"
 ```
 
-8. **Line 91** and later, assign a variable and a default value for each of your command line argument:
+10. **Line 91** and later, assign a variable and a default value for each of your command line argument:
 
 ```bash
 arg_help=false
@@ -163,7 +169,7 @@ arg_list_exit_codes=false
 arg_directory=""
 ```
 
-9. **Line 107** and later, set the list of strings to be matched as arguments in the command line and assign it to the variables listed at step **8**:
+11. **Line 107** and later, set the list of strings to be matched as arguments in the command line and assign it to the variables listed at step **8**:
 
 ```bash
         -h|--help)
@@ -686,6 +692,20 @@ Usage: zerg-larva.sh [OPTION]
 ```
 
 # Changelog
+
+### v1.0.13 - Second hardening (2025-12-29)
+* ba703ae 2025-12-29 Added Makefile to update token in script header
+* 43fd78e 2025-12-29 Updated README.md to reflect z_log STDERR behavior for WARN, ERROR, FATAL
+* ddd0f9b 2025-12-29 z_log() headers updated to match stderr routing
+* 3581926 2025-12-29 z_list_exit_codes(): added RC_INTERNAL_INT_ARGS=9
+* 2159d40 2025-12-29 "echo -e" removal
+* ef217d1 2025-12-29 Removed noise in z_dump function
+* a76bbe3 2025-12-27 z_stacktrace(): No WARN noise without --verbose
+* 7e226aa 2025-12-27 z_log(): Invalid level fallback message to stderr
+* 0a6288a 2025-12-27 Validate allowed levels before threshold
+* 496d02d 2025-12-27 z_log(): sanitize log level input
+* 7ac67d9 2025-12-27 Arm `trap 'z_trap_exit' EXIT` `trap 'z_trap_error'
+* bb54eb6 2025-12-27 main made non-zero compatible with `set -e`
 
 ### v1.0.12 - Hardened release (2025-12-24)
 * 170ccd4 2025-12-24 Fixed target directory validation logic

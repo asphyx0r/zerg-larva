@@ -1,8 +1,24 @@
 
+## v1.0.13
+References | Description | Author(s)
+--- | --- | ---
+ba703ae | Added Makefile to update token in script header | asphyx
+43fd78e | Updated README.md to reflect z_log STDERR behavior for WARN, ERROR, FATAL | asphyx
+ddd0f9b | z_log() headers updated to match stderr routing | asphyx
+3581926 | z_list_exit_codes(): added RC_INTERNAL_INT_ARGS=9 | asphyx
+2159d40 | "echo -e" removal | asphyx
+ef217d1 | Removed noise in z_dump function | asphyx
+a76bbe3 | z_stacktrace(): No WARN noise without --verbose | asphyx
+7e226aa | z_log(): Invalid level fallback message to stderr | asphyx
+0a6288a | Validate allowed levels before threshold | asphyx
+496d02d | z_log(): sanitize log level input | asphyx
+7ac67d9 | Arm `trap 'z_trap_exit' EXIT` `trap 'z_trap_error' | asphyx
+bb54eb6 | main made non-zero compatible with `set -e` | asphyx
+
 ## v1.0.12
 References | Description | Author(s)
 --- | --- | ---
-170ccd4 | Fixed target directory validation logic | asphyx
+a6ea0ba | Fixed target directory validation logic | asphyx
 bd404d8 | Added --verbose to z_stacktrace() description | asphyx
 59a2ebd | README improvements and useless variable removal | asphyx
 6fdd15d | Updated README.md to reflect z_log() changes | asphyx
@@ -132,4 +148,4 @@ References | Description | Author(s)
 --- | --- | ---
 3bf9436 | Repo init: first commit | asphyx
 
-Updated: 2025-12-24 18:43:08
+Updated: 2025-12-29 09:09:15
