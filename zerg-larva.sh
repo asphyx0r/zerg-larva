@@ -459,13 +459,8 @@ function z_checkdep() {
 # errors:   None
 function z_dump() {
 
-	# Only dump information if verbose mode is enabled
-	if [[ "$arg_verbose" != true ]]; then
-
-		z_log "WARN" "Verbose mode is not enabled, cannot dump script information."
-		return 0
-
-	else
+	# Only dump information if verbose mode is enabled and log level set to DEBUG
+	if [[ "$arg_verbose" = true ]]; then
 
 		z_log "DEBUG" "Dumping script information..."
 
