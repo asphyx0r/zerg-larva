@@ -200,7 +200,7 @@ function z_log_level_to_int {
 # example:  z_log "INFO" "This is an informational message."
 # input:    $1: LEVEL (FATAL, ERROR, WARN, INFO, DEBUG)
 #           $2: Log message
-# output:   String to STDOUT
+# output:   String to STDOUT (or STDERR for WARN, ERROR, FATAL)
 # return:   0 in case of success
 # errors:   $RC_INTERNAL_LOG_ARGS if not called with 2 arguments
 function z_log() {
@@ -293,7 +293,7 @@ function z_log() {
 # input:    $1: EXIT_CODE (integer)
 #           $2: Error message (string)
 # output:   String to STDOUT (error message)
-#           Stacktraece to STDOUT (if verbose mode is enabled)
+#           Stacktrace to STDOUT (if verbose mode is enabled)
 # return:   None
 # errors:   Exits with the provided EXIT_CODE
 function z_die() {
