@@ -365,6 +365,7 @@ function z_list_exit_codes() {
 		RC=6   : Internal error: checkdep() called with wrong number of arguments
 		RC=7   : Missing prerequisite (required command not found)
 		RC=8   : Internal error: trace() called with wrong number of arguments
+		RC=9   : Internal error: log_level_to_int() called with wrong number of arguments
 		RC=124 : Dummy error for demonstration purposes
 		RC=125 : Unknown error
 	EOF
