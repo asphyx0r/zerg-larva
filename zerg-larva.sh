@@ -385,8 +385,8 @@ function z_trace() {
 
 	# Arguments assignation
 	if [ "$#" -ne 1 ]; then
-		echo -e "\t${FUNCNAME[0]}: Error: 1 argument required. Usage: trace BOOLEAN"
-		RC=$RC_INTERNAL_TRC_ARGS
+		printf '\t%s: Error: 1 argument required. Usage: trace BOOLEAN\n' "${FUNCNAME[0]}" >&2
+		#RC=$RC_INTERNAL_TRC_ARGS
 		return "$RC_INTERNAL_TRC_ARGS"
 	fi
 
@@ -401,7 +401,7 @@ function z_trace() {
 		set +x 2>/dev/null || true
 		;;
 	*)
-		echo -e "\t${FUNCNAME[0]}: Error: Invalid argument. Usage: trace BOOLEAN (1|0)"
+		printf '\t%s: Error: Invalid argument. Usage: trace BOOLEAN (1|0)\n' "${FUNCNAME[0]}" >&2
 		return "$RC_INTERNAL_TRC_ARGS"
 		;;
 	esac
