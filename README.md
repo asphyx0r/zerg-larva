@@ -228,7 +228,7 @@ Notes:
 ------------------------------------------------------------------------------
  **NAME**
  
-&emsp;&emsp;`z_log()` - Print a log line
+&emsp;&emsp;`z_log()` - Print a log line on STDOUT (DEBUG/INFO), or STDERR (WARN/ERROR/FATAL)
 
  **SYNOPSIS**
 
